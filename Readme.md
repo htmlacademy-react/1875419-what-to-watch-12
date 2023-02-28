@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Ксения Нечукина](https://up.htmlacademy.ru/react/12/user/1875419).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
 
 ---
 
