@@ -1,8 +1,14 @@
-function MainFilmCard() : JSX.Element {
+type MainFilmInfoProp = {
+  title: string;
+  genre: string;
+  year: number;
+}
+
+function MainFilmCard({title, genre, year}: MainFilmInfoProp) : JSX.Element {
   return (
     <section className="film-card">
       <div className="film-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+        <img src="img/bg-the-grand-budapest-hotel.jpg" alt={title} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -35,10 +41,10 @@ function MainFilmCard() : JSX.Element {
           </div>
 
           <div className="film-card__desc">
-            <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+            <h2 className="film-card__title">{title}</h2>
             <p className="film-card__meta">
-              <span className="film-card__genre">Drama</span>
-              <span className="film-card__year">2014</span>
+              <span className="film-card__genre">{genre}</span>
+              <span className="film-card__year">{year}</span>
             </p>
 
             <div className="film-card__buttons">
