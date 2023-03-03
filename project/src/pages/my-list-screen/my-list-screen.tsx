@@ -1,11 +1,11 @@
-import UserPageHeader from '../../components/user-page-header/user-page-header';
+import AuthorizedUserHeader from '../../components/authorized-user-header/authorized-user-header';
 import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 
 function MyListScreen(): JSX.Element {
   return (
     <div className="user-page">
-      <UserPageHeader />
+      <AuthorizedUserHeader />
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>

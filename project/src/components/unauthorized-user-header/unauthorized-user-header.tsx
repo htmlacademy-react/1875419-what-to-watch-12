@@ -1,6 +1,4 @@
-import AuthorizedUserHeader from '../authorized-user-header/authorized-user-header';
-
-function UserPageHeader(): JSX.Element {
+function UnauthorizedUserHeader(): JSX.Element {
   return (
     <header className="page-header user-page__head">
       <div className="logo">
@@ -11,9 +9,9 @@ function UserPageHeader(): JSX.Element {
         </a>
       </div>
 
-      <AuthorizedUserHeader />
+      <h1 className="page-title user-page__title">Sign in</h1>
     </header>
   );
 }
 
-export default UserPageHeader;
+export default UnauthorizedUserHeader;
