@@ -1,3 +1,7 @@
+import Logo from '../logo/logo';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
 type MainFilmInfoProp = {
   title: string;
   genre: string;
@@ -14,13 +18,7 @@ function MainFilmCard({title, genre, year}: MainFilmInfoProp) : JSX.Element {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header film-card__head">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+        <Logo />
 
         <ul className="user-block">
           <li className="user-block__item">
@@ -29,7 +27,7 @@ function MainFilmCard({title, genre, year}: MainFilmInfoProp) : JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
+            <Link className="user-block__link" to={AppRoute.SignIn}>Sign out</Link>
           </li>
         </ul>
       </header>
