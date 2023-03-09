@@ -1,3 +1,6 @@
+import Logo from '../../components/logo/logo';
+import { Link } from 'react-router-dom';
+
 function AddReviewScreen(): JSX.Element {
   return (
     <section className="film-card film-card--full">
@@ -9,21 +12,15 @@ function AddReviewScreen(): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <Link to="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
+                <Link to="#todo" className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
@@ -35,7 +32,7 @@ function AddReviewScreen(): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <Link to="/" className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>
