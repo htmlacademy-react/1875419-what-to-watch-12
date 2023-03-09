@@ -1,12 +1,9 @@
+import App from './components/app/app';
+import { filmsData } from './mocks/films';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
+import { reviewsData } from './mocks/reviews';
 
-const TheGrandBudapestHotel = {
-  title: 'The Grand Budapest Hotel',
-  genre: 'Drama',
-  year: 2014
-} as const;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -15,9 +12,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      title = {TheGrandBudapestHotel.title}
-      genre = {TheGrandBudapestHotel.genre}
-      year = {TheGrandBudapestHotel.year}
+      films = {filmsData}
+      reviews = {reviewsData}
     />
   </React.StrictMode>,
 );
