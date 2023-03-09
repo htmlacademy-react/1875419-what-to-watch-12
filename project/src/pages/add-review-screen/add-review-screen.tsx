@@ -1,4 +1,5 @@
 import Logo from '../../components/logo/logo';
+import { Link } from 'react-router-dom';
 
 function AddReviewScreen(): JSX.Element {
   return (
@@ -16,10 +17,10 @@ function AddReviewScreen(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <Link to="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
+                <Link to="#todo" className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
@@ -31,7 +32,7 @@ function AddReviewScreen(): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <Link to="/" className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>

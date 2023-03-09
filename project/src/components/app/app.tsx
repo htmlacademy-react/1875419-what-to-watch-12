@@ -36,7 +36,7 @@ function App({title, genre, year}: MainScreenProp): JSX.Element {
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
               <MyListScreen/>
             </PrivateRoute>
@@ -46,7 +46,7 @@ function App({title, genre, year}: MainScreenProp): JSX.Element {
           path={AppRoute.AddReview}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
               <AddReviewScreen />
             </PrivateRoute>
