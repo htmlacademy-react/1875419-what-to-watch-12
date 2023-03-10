@@ -6,9 +6,10 @@ import UserBlock from '../user-header/user-block';
 
 type MainFilmInfoProp = {
   films: Films[];
+  myFilms: Films[];
 }
 
-function MainFilmCard({films}: MainFilmInfoProp) : JSX.Element {
+function MainFilmCard({films, myFilms}: MainFilmInfoProp) : JSX.Element {
   const firstFilm = films[0];
 
   return (
@@ -40,7 +41,7 @@ function MainFilmCard({films}: MainFilmInfoProp) : JSX.Element {
 
             <div className="film-card__buttons">
               <PlayButton />
-              <AddToFavoriteButton />
+              <AddToFavoriteButton myFilms={myFilms} />
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ function MyListScreen({myFilms}: MyListProp): JSX.Element {
   const [_, setActiveFilm] = useState(0);
   return (
     <div className="user-page">
-      <AuthorizedUserHeader />
+      <AuthorizedUserHeader myFilms={myFilms} />
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>

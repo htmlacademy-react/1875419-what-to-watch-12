@@ -5,13 +5,15 @@ import Footer from '../../components/footer/footer';
 
 type MainFilmCardProp = {
   films: Films[];
+  myFilms: Films[];
 }
 
-function MainScreen ({films}: MainFilmCardProp): JSX.Element {
+function MainScreen ({films, myFilms}: MainFilmCardProp): JSX.Element {
   return (
     <>
       <MainFilmCard
         films={films}
+        myFilms={myFilms}
       />
       <div className="page-content">
         <Catalog

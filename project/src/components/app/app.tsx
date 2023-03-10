@@ -15,15 +15,22 @@ import { Reviews } from '../../types/reviews';
 type MainScreenProp = {
   films: Films[];
   reviews: Reviews[];
+  myFilms: Films[];
 }
 
-function App({films, reviews}: MainScreenProp): JSX.Element {
+
+function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element = {<MainScreen films={films}/>}
+          element = {
+            <MainScreen
+              films={films}
+              myFilms={myFilms}
+            />
+          }
         />
         <Route
           path={AppRoute.SignIn}
@@ -40,9 +47,7 @@ function App({films, reviews}: MainScreenProp): JSX.Element {
               authorizationStatus={AuthorizationStatus.Auth}
             >
               <MyListScreen
-                myFilms={films
-                  .filter((film) => film.isFavorite
-                  )}
+                myFilms={myFilms}
               />
             </PrivateRoute>
           }
