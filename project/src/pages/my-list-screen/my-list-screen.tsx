@@ -1,4 +1,4 @@
-import AuthorizedUserHeader from '../../components/authorized-user-header/authorized-user-header';
+import AuthorizedUserHeader from '../../components/user-header/authorized-user-header';
 import { Films } from '../../types/films';
 import FilmCard from '../../components/film-card/film-card';
 import { FilmCardProp } from '../../components/film-card/film-card';

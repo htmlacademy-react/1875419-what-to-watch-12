@@ -1,8 +1,9 @@
 import CatalogLikeThis from '../../components/catalog-like-this/catalog-like-this';
-import Footer from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import Logo from '../../components/logo/logo';
+import Footer from '../../components/footer/footer';
+import UserBlock from '../../components/user-header/user-block';
+
 
 function MoviePageScreen(): JSX.Element {
   return (
@@ -18,16 +19,7 @@ function MoviePageScreen(): JSX.Element {
           <header className="page-header film-card__head">
             <Logo />
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-              </li>
-            </ul>
+            <UserBlock />
           </header>
 
           <div className="film-card__wrap">

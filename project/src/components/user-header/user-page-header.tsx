@@ -1,4 +1,4 @@
-import AuthorizedUserHeader from '../authorized-user-header/authorized-user-header';
+import AuthorizedUserHeader from './authorized-user-header';
 import Logo from '../logo/logo';
 
 function UserPageHeader(): JSX.Element {

@@ -1,9 +1,8 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewText from '../../components/review/review-text';
 import ReviewRating from '../../components/review/review-rating';
-
+import UserBlock from '../../components/user-header/user-block';
 function AddReviewScreen(): JSX.Element {
   return (
     <section className="film-card film-card--full">
@@ -19,16 +18,7 @@ function AddReviewScreen(): JSX.Element {
 
           <Breadcrumbs />
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to="/" className="user-block__link">Sign out</Link>
-            </li>
-          </ul>
+          <UserBlock />
         </header>
 
         <div className="film-card__poster film-card__poster--small">

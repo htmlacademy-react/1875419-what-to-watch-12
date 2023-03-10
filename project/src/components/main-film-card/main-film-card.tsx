@@ -1,16 +1,14 @@
-import { AppRoute } from '../../const';
 import { Films } from '../../types/films';
-import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
+import UserBlock from '../user-header/user-block';
 
 type MainFilmInfoProp = {
   films: Films[];
 }
 
 function MainFilmCard({films}: MainFilmInfoProp) : JSX.Element {
-  //eslint-disable-next-line
-  console.log(films[0]);
   const firstFilm = films[0];
+
   return (
     <section className="film-card">
       <div className="film-card__bg">
@@ -22,16 +20,7 @@ function MainFilmCard({films}: MainFilmInfoProp) : JSX.Element {
       <header className="page-header film-card__head">
         <Logo />
 
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <Link className="user-block__link" to={AppRoute.SignIn}>Sign out</Link>
-          </li>
-        </ul>
+        <UserBlock />
       </header>
 
       <div className="film-card__wrap">
