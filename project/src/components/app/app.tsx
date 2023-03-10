@@ -39,7 +39,9 @@ function App({films, reviews}: MainScreenProp): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyListScreen films={films}/>
+              <MyListScreen myFilms={films.filter((film) => film.isFavorite
+              )}
+              />
             </PrivateRoute>
           }
         />

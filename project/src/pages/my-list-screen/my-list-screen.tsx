@@ -5,10 +5,10 @@ import { FilmCardProp } from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 
 type MyListProp = {
-  films: Films[];
+  myFilms: Films[];
 }
 
-function MyListScreen({films}: MyListProp): JSX.Element {
+function MyListScreen({myFilms}: MyListProp): JSX.Element {
   return (
     <div className="user-page">
       <AuthorizedUserHeader />
@@ -17,21 +17,16 @@ function MyListScreen({films}: MyListProp): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          {films.map(({previewImage, id, name, isFavorite}:FilmCardProp) => {
-            if (isFavorite) {
-              return(
-                <FilmCard
-                  key={id}
-                  id={id}
-                  name={name}
-                  previewImage={previewImage}
-                  isFavorite = {isFavorite}
-                />
-              );
-            }
-            return '';
-          }
+          {myFilms.map(({previewImage, id, name}:FilmCardProp) =>(
+            <FilmCard
+              key={id}
+              id={id}
+              name={name}
+              previewImage={previewImage}
+            />
+          )
           )}
+
         </div>
       </section>
 
