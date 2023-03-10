@@ -158,7 +158,7 @@ export const filmsData: Films[] = [
     'genre': 'Comedy',
     'released': 2000,
     'id': 7,
-    'isFavorite': false,
+    'isFavorite': true,
     'videoLink': 'https://12.react.pages.academy/static/film/video/bubbles.mp4',
     'previewVideoLink': 'https://12.react.pages.academy/static/film/video/traffic.mp4'
   },

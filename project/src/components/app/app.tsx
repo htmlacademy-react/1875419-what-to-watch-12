@@ -39,7 +39,7 @@ function App({films, reviews}: MainScreenProp): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyListScreen/>
+              <MyListScreen films={films}/>
             </PrivateRoute>
           }
         />

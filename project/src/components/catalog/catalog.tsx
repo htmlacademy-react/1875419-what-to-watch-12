@@ -14,12 +14,13 @@ function Catalog({films}: FilmsCatalogProp): JSX.Element {
 
       <CatalogGenres />
       <div className="catalog__films-list">
-        {films.map(({previewImage, id, name}: FilmCardProp) => (
+        {films.map(({previewImage, id, name, isFavorite}: FilmCardProp) => (
           <FilmCard
             key={id}
             id={id}
             name={name}
             previewImage={previewImage}
+            isFavorite={isFavorite}
           />
         )
         )}

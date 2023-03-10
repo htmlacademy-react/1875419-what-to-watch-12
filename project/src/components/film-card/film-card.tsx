@@ -4,10 +4,11 @@ export type FilmCardProp = {
 	name: string;
 	previewImage: string;
 	id: number;
+  isFavorite: boolean;
 }
 
 
-function FilmCard({previewImage, name, id}: FilmCardProp): JSX.Element {
+function FilmCard({previewImage, name, id, isFavorite}: FilmCardProp): JSX.Element {
   return (
 
     <article className="small-film-card catalog__films-card">
