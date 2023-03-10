@@ -4,13 +4,13 @@ export type FilmCardProp = {
 	name: string;
 	previewImage: string;
 	id: number;
+  onMouseEnterHandler: () => void;
 }
 
 
-function FilmCard({previewImage, name, id}: FilmCardProp): JSX.Element {
+function FilmCard({previewImage, name, id, onMouseEnterHandler}: FilmCardProp): JSX.Element {
   return (
-
-    <article className="small-film-card catalog__films-card">
+    <article onMouseEnter={onMouseEnterHandler} className="small-film-card catalog__films-card">
       <Link className="small-film-card__link" to={`films/${id}`}>
         <div className="small-film-card__image">
           <img src={previewImage} alt={name} width="280" height="175" />
