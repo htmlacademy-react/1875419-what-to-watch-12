@@ -1,6 +1,7 @@
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import CatalogLikeThis from '../../components/catalog-like-this/catalog-like-this';
 import { Films } from '../../types/films';
+import FilmCardNav from '../../components/film-nav/film-card-nav';
 import { FilmRating } from '../../const';
 import Footer from '../../components/footer/footer';
 import { Link, useParams } from 'react-router-dom';
@@ -59,19 +60,7 @@ function MoviePageScreen({films, myFilms}: MoviePageProp): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to="#todo" className="film-nav__link">Overview</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#todo" className="film-nav__link">Details</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#todo" className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
+              <FilmCardNav />
 
               <div className="film-rating">
                 <div className="film-rating__score">{filmChoosed?.rating}</div>
