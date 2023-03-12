@@ -14,14 +14,11 @@ type MoviePageProp = {
 }
 
 function MoviePageScreen({films, myFilms}: MoviePageProp): JSX.Element {
-  //eslint-disable-next-line
-  console.log(myFilms);
+
   const {id} = useParams();
-  //eslint-disable-next-line
-  console.log(id);
+
   const filmChoosed = films.find((film) => film.id === Number(id));
-  //eslint-disable-next-line
-  console.log(filmChoosed);
+
   return (
     <>
       <section className="film-card film-card--full" style={{backgroundColor: filmChoosed?.backgroundColor}}>
@@ -47,7 +44,7 @@ function MoviePageScreen({films, myFilms}: MoviePageProp): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <PlayButton />
+                <PlayButton id={filmChoosed?.id as number}/>
                 <AddToFavoriteButton myFilms={myFilms}/>
                 <Link to={`films/${Number(id)}/review`} className="btn film-card__button">Add review</Link>
               </div>

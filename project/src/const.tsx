@@ -32,5 +32,5 @@ export function FilmRating(rating: number | undefined): string {
   if (rating >= 10) {
     return 'Awsome';
   }
-  return 'Smth went wrong';
+  return 'No rating';
 }
