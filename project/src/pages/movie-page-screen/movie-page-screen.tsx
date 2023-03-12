@@ -46,7 +46,7 @@ function MoviePageScreen({films, myFilms}: MoviePageProp): JSX.Element {
               <div className="film-card__buttons">
                 <PlayButton id={filmChoosed?.id as number}/>
                 <AddToFavoriteButton myFilms={myFilms}/>
-                <Link to={`films/${Number(id)}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={`/films/${Number(id)}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
