@@ -1,23 +1,24 @@
-import MainFilmCard from '../../components/main-film-card/main-film-card';
 import Catalog from '../../components/catalog/catalog';
+import { Films } from '../../types/films';
+import MainFilmCard from '../../components/main-film-card/main-film-card';
 import Footer from '../../components/footer/footer';
 
 type MainFilmCardProp = {
-  title: string;
-  genre: string;
-  year: number;
+  films: Films[];
+  myFilms: Films[];
 }
 
-function MainScreen ({title, genre, year}: MainFilmCardProp): JSX.Element {
+function MainScreen ({films, myFilms}: MainFilmCardProp): JSX.Element {
   return (
     <>
       <MainFilmCard
-        title = {title}
-        genre = {genre}
-        year = {year}
+        films={films}
+        myFilms={myFilms}
       />
       <div className="page-content">
-        <Catalog />
+        <Catalog
+          films={films}
+        />
         <Footer />
       </div>
     </>

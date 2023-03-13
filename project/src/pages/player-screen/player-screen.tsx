@@ -1,7 +1,16 @@
-function PlayerScreen(): JSX.Element {
+import { Films } from '../../types/films';
+import { useParams } from 'react-router-dom';
+
+type PlayerProps = {
+  films: Films[];
+}
+
+function PlayerScreen({films}: PlayerProps): JSX.Element {
+  const {id} = useParams();
+  const filmChoosed = films.find((film) => film.id === Number(id));
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={filmChoosed?.videoLink} className="player__video" poster={filmChoosed?.backgroundImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
