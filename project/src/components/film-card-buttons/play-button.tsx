@@ -6,10 +6,7 @@ type PlayButtonProp = {
 }
 
 function PlayButton({id}: PlayButtonProp): JSX.Element {
-  // const {id} = useParams();
-  // const filmChoosed = films.find((film) => film.id === Number(id));
-  //eslint-disable-next-line
-  // console.log(filmChoosed);
+
   return (
     <Link to={`/player/${id}`} className="btn btn--play film-card__button" type="button">
       <svg viewBox="0 0 19 19" width="19" height="19">

@@ -13,23 +13,31 @@ export enum AuthorizationStatus {
     Unknown = 'UNKNOWN',
   }
 
+
+const RatingValue = {
+  BAD: 3,
+  NORMAL: 5,
+  GOOD: 8,
+  VERY_GOOD: 10,
+};
+
 export function FilmRating(rating: number | undefined): string {
   if (rating === undefined) {
     return 'No rating';
   }
-  if (rating < 3) {
+  if (rating < RatingValue.BAD) {
     return 'Bad';
   }
-  if (3 <= rating && rating < 5) {
+  if (RatingValue.BAD <= rating && rating < RatingValue.NORMAL) {
     return 'Normal';
   }
-  if (5 <= rating && rating < 8) {
+  if (RatingValue.NORMAL <= rating && rating < RatingValue.GOOD) {
     return 'Good';
   }
-  if (8 <= rating && rating < 10) {
+  if (RatingValue.GOOD <= rating && rating < RatingValue.VERY_GOOD) {
     return 'Very good';
   }
-  if (rating >= 10) {
+  if (rating >= RatingValue.VERY_GOOD) {
     return 'Awsome';
   }
   return 'No rating';

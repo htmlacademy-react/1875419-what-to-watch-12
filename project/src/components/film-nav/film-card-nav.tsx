@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 function FilmCardNav(): JSX.Element {
-  const [activeView, setActiveView] = useState();
-  //eslint-disable-next-line
-  console.log(activeView, setActiveView);
+
   return (
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
