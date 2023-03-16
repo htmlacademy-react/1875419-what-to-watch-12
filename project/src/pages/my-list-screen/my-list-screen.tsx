@@ -26,6 +26,8 @@ function MyListScreen({myFilms}: MyListProp): JSX.Element {
               id={film.id}
               name={film.name}
               previewImage={film.previewImage}
+              posterImage={film.posterImage}
+              previewVideoLink={film.previewVideoLink}
             />
           )
           )}
