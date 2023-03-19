@@ -20,7 +20,7 @@ function FilmTabDetails({films}: DetailsProp): JSX.Element {
             {filmChoosed?.starring.map((actor, id) => {
               const keyValue = `${id}-${actor}`;
               return(
-                <span style={{display: 'block'}}key={keyValue}>{actor}</span>
+                <span style={{display: 'block'}} key={keyValue}>{actor}</span>
               );
             })}
           </span>
