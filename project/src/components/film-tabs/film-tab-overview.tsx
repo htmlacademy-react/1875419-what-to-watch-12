@@ -5,7 +5,7 @@ import useFilmChoosed from '../../hooks/use-film-choosed';
 type OverviewProp ={
   films: Films[];
 }
-function FilmNavOverview({films}: OverviewProp): JSX.Element {
+function FilmTabOverview({films}: OverviewProp): JSX.Element {
   const filmChoosed = useFilmChoosed(films);
   return (
     <>
@@ -28,4 +28,4 @@ function FilmNavOverview({films}: OverviewProp): JSX.Element {
   );
 }
 
-export default FilmNavOverview;
+export default FilmTabOverview;

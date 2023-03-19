@@ -10,7 +10,7 @@ type ReviewsProp = {
   films: Films[];
 }
 
-function FilmNavReviews({reviews, films}: ReviewsProp): JSX.Element {
+function FilmTabReviews({reviews, films}: ReviewsProp): JSX.Element {
   const filmChoosed = useFilmChoosed(films);
   const filmReviews = reviews.filter((review) => review.id === filmChoosed?.id);
   return (
@@ -40,4 +40,4 @@ function FilmNavReviews({reviews, films}: ReviewsProp): JSX.Element {
   );
 }
 
-export default FilmNavReviews;
+export default FilmTabReviews;

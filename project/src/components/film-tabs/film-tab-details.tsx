@@ -5,7 +5,7 @@ type DetailsProp = {
   films: Films[];
 }
 
-function FilmNavDetails({films}: DetailsProp): JSX.Element {
+function FilmTabDetails({films}: DetailsProp): JSX.Element {
   const filmChoosed = useFilmChoosed(films);
   return (
     <div className="film-card__text film-card__row">
@@ -49,4 +49,4 @@ function FilmNavDetails({films}: DetailsProp): JSX.Element {
   );
 }
 
-export default FilmNavDetails;
+export default FilmTabDetails;

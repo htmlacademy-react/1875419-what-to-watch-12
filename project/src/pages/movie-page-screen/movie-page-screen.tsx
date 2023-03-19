@@ -4,9 +4,9 @@ import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import CatalogLikeThis from '../../components/catalog-like-this/catalog-like-this';
 import { Films } from '../../types/films';
-import FilmNavDetails from '../../components/film-nav/film-nav-details';
-import FilmNavOverview from '../../components/film-nav/film-nav-overview';
-import FilmNavReviews from '../../components/film-nav/film-nav-reviews';
+import FilmTabDetails from '../../components/film-tabs/film-tab-details';
+import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
+import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
@@ -116,17 +116,17 @@ function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element 
               </nav>
               { isTabActive.isOverviewActive
                 ?
-                <FilmNavOverview films={films} />
+                <FilmTabOverview films={films} />
                 :
                 ''}
               { isTabActive.isDetailsActive
                 ?
-                <FilmNavDetails films={films} />
+                <FilmTabDetails films={films} />
                 :
                 ''}
               { isTabActive.isReviewsActive
                 ?
-                <FilmNavReviews films={films} reviews={reviews}/>
+                <FilmTabReviews films={films} reviews={reviews}/>
                 :
                 ''}
 
