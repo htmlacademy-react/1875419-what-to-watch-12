@@ -1,19 +1,18 @@
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import CatalogLikeThis from '../../components/catalog-like-this/catalog-like-this';
 import { Films } from '../../types/films';
-//import FilmCardNav from '../../components/film-nav/film-card-tabs';
 import FilmNavDetails from '../../components/film-nav/film-nav-details';
 import FilmNavOverview from '../../components/film-nav/film-nav-overview';
 import FilmNavReviews from '../../components/film-nav/film-nav-reviews';
 import Footer from '../../components/footer/footer';
-import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
 import { Reviews } from '../../types/reviews';
 import useFilmChoosed from '../../hooks/use-film-choosed';
 import UserBlock from '../../components/user-header/user-block';
-import { useState } from 'react';
-import cn from 'classnames';
 
 type MoviePageProp = {
   films: Films[];
@@ -137,7 +136,7 @@ function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element 
       </section>
 
       <div className="page-content">
-        <CatalogLikeThis />
+        <CatalogLikeThis films={films}/>
         <Footer />
       </div>
     </>
