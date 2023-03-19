@@ -1,24 +1,34 @@
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import CatalogLikeThis from '../../components/catalog-like-this/catalog-like-this';
 import { Films } from '../../types/films';
-import FilmCardNav from '../../components/film-nav/film-card-nav';
-import { FilmRating } from '../../const';
+//import FilmCardNav from '../../components/film-nav/film-card-tabs';
+import FilmNavDetails from '../../components/film-nav/film-nav-details';
+import FilmNavOverview from '../../components/film-nav/film-nav-overview';
+import FilmNavReviews from '../../components/film-nav/film-nav-reviews';
 import Footer from '../../components/footer/footer';
 import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
+import { Reviews } from '../../types/reviews';
+import useFilmChoosed from '../../hooks/use-film-choosed';
 import UserBlock from '../../components/user-header/user-block';
+import { useState } from 'react';
+import cn from 'classnames';
 
 type MoviePageProp = {
   films: Films[];
   myFilms: Films[];
+  reviews: Reviews[];
 }
 
-function MoviePageScreen({films, myFilms}: MoviePageProp): JSX.Element {
+function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element {
 
+  const [isOverviewActive, setIsOverviewActive] = useState(true);
+  const [isDetailsActive, setIsDetailsActive] = useState(false);
+  const [isReviewsActive, setIsReviewsActive] = useState(false);
   const {id} = useParams();
 
-  const filmChoosed = films.find((film) => film.id === Number(id));
+  const filmChoosed = useFilmChoosed(films);
 
   return (
     <>
@@ -60,23 +70,59 @@ function MoviePageScreen({films, myFilms}: MoviePageProp): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <FilmCardNav />
+              <nav className="film-nav film-card__nav">
+                <ul className="film-nav__list">
+                  <li className={cn(
+                    'film-nav__item',
+                    {'film-nav__item--active' : isOverviewActive }
+                  )}
+                  onClick={() => {
+                    setIsOverviewActive(true);
+                    setIsDetailsActive(false);
+                    setIsReviewsActive(false);}}
+                  >
+                    <Link to="#todo" className="film-nav__link">Overview</Link>
+                  </li>
+                  <li className={cn(
+                    'film-nav__item',
+                    {'film-nav__item--active' : isDetailsActive }
+                  )}
+                  onClick={() => {
+                    setIsOverviewActive(false);
+                    setIsDetailsActive(true);
+                    setIsReviewsActive(false);}}
+                  >
+                    <Link to="#todo" className="film-nav__link">Details</Link>
+                  </li>
+                  <li className={cn(
+                    'film-nav__item',
+                    {'film-nav__item--active' : isReviewsActive }
+                  )}
+                  onClick={() => {
+                    setIsOverviewActive(false);
+                    setIsDetailsActive(false);
+                    setIsReviewsActive(true);}}
+                  >
+                    <Link to="#todo" className="film-nav__link">Reviews</Link>
+                  </li>
+                </ul>
+              </nav>
+              { isOverviewActive
+                ?
+                <FilmNavOverview films={films} />
+                :
+                ''}
+              { isDetailsActive
+                ?
+                <FilmNavDetails films={films} />
+                :
+                ''}
+              { isReviewsActive
+                ?
+                <FilmNavReviews films={films} reviews={reviews}/>
+                :
+                ''}
 
-              <div className="film-rating">
-                <div className="film-rating__score">{filmChoosed?.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{FilmRating(filmChoosed?.rating)}</span>
-                  <span className="film-rating__count">{filmChoosed?.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{filmChoosed?.description}</p>
-
-                <p className="film-card__director"><strong>Director: {filmChoosed?.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {filmChoosed?.starring.join(', ')} and other</strong></p>
-              </div>
             </div>
           </div>
         </div>

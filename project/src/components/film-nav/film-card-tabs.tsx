@@ -1,6 +1,10 @@
+import { Films } from '../../types/films';
 import { Link } from 'react-router-dom';
 
-function FilmCardNav(): JSX.Element {
+type TabsProp = {
+  films: Films[];
+}
+function FilmCardTabs({films}: TabsProp): JSX.Element {
 
   return (
     <nav className="film-nav film-card__nav">
@@ -19,4 +23,4 @@ function FilmCardNav(): JSX.Element {
   );
 }
 
-export default FilmCardNav;
+export default FilmCardTabs;

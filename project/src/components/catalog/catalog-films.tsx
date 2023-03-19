@@ -8,7 +8,7 @@ type FilmsCatalogProp = {
   films: Films[];
 }
 
-function Catalog({films}: FilmsCatalogProp): JSX.Element {
+function CatalogFilms({films}: FilmsCatalogProp): JSX.Element {
   //eslint-disable-next-line
   const [_, setActiveFilm] = useState(0);
   return (
@@ -36,4 +36,4 @@ function Catalog({films}: FilmsCatalogProp): JSX.Element {
   );
 }
 
-export default Catalog;
+export default CatalogFilms;

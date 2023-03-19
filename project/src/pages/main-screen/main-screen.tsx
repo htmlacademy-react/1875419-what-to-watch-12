@@ -1,4 +1,4 @@
-import Catalog from '../../components/catalog/catalog';
+import CatalogFilms from '../../components/catalog/catalog-films';
 import { Films } from '../../types/films';
 import MainFilmCard from '../../components/main-film-card/main-film-card';
 import Footer from '../../components/footer/footer';
@@ -16,7 +16,7 @@ function MainScreen ({films, myFilms}: MainFilmCardProp): JSX.Element {
         myFilms={myFilms}
       />
       <div className="page-content">
-        <Catalog
+        <CatalogFilms
           films={films}
         />
         <Footer />
