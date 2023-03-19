@@ -34,7 +34,7 @@ function FilmCard({
       onMouseOut={onMouseOutHandler}
       className="small-film-card catalog__films-card"
     >
-      <Link className="small-film-card__link" to={`films/${id}`}>
+      <Link className="small-film-card__link" to={`/films/${id}`}>
         {
           isActive ?
             <VideoPlayer previewVideoLink={previewVideoLink} posterImage={posterImage} />
