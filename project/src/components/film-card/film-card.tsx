@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
-import VideoPlayer from '../video-player/video-player';
+import VideoPlayer from '../preview-video-player/video-player';
 import { useState } from 'react';
 
 export type FilmCardProp = {
 	name: string;
 	previewImage: string;
 	id: number;
-  onMouseEnterHandler: () => void;
   previewVideoLink: string;
   posterImage: string;
 }
@@ -16,7 +15,6 @@ function FilmCard({
   previewImage,
   name,
   id,
-  onMouseEnterHandler,
   posterImage,
   previewVideoLink
 }: FilmCardProp): JSX.Element {
@@ -32,12 +30,11 @@ function FilmCard({
 
   return (
     <article
-      onMouseEnter={onMouseEnterHandler}
       onMouseOver={onMouseOverHandler}
       onMouseOut={onMouseOutHandler}
       className="small-film-card catalog__films-card"
     >
-      <Link className="small-film-card__link" to={`films/${id}`}>
+      <Link className="small-film-card__link" to={`/films/${id}`}>
         {
           isActive ?
             <VideoPlayer previewVideoLink={previewVideoLink} posterImage={posterImage} />
