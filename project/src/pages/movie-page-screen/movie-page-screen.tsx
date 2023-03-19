@@ -22,10 +22,12 @@ type MoviePageProp = {
 }
 
 function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element {
+  const [isTabActive, setIsTabActive] = useState({
+    isOverviewActive: true,
+    isDetailsActive: false,
+    isReviewsActive: false
+  });
 
-  const [isOverviewActive, setIsOverviewActive] = useState(true);
-  const [isDetailsActive, setIsDetailsActive] = useState(false);
-  const [isReviewsActive, setIsReviewsActive] = useState(false);
   const {id} = useParams();
 
   const filmChoosed = useFilmChoosed(films);
@@ -74,50 +76,56 @@ function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element 
                 <ul className="film-nav__list">
                   <li className={cn(
                     'film-nav__item',
-                    {'film-nav__item--active' : isOverviewActive }
+                    {'film-nav__item--active' : isTabActive.isOverviewActive }
                   )}
                   onClick={() => {
-                    setIsOverviewActive(true);
-                    setIsDetailsActive(false);
-                    setIsReviewsActive(false);}}
+                    setIsTabActive({...isTabActive,
+                      isDetailsActive: false,
+                      isOverviewActive: true,
+                      isReviewsActive: false});
+                  }}
                   >
-                    <Link to="#todo" className="film-nav__link">Overview</Link>
+                    <Link to={`/films/${Number(id)}`} className="film-nav__link">Overview</Link>
                   </li>
                   <li className={cn(
                     'film-nav__item',
-                    {'film-nav__item--active' : isDetailsActive }
+                    {'film-nav__item--active' : isTabActive.isDetailsActive }
                   )}
                   onClick={() => {
-                    setIsOverviewActive(false);
-                    setIsDetailsActive(true);
-                    setIsReviewsActive(false);}}
+                    setIsTabActive({...isTabActive,
+                      isDetailsActive: true,
+                      isOverviewActive: false,
+                      isReviewsActive: false});
+                  }}
                   >
-                    <Link to="#todo" className="film-nav__link">Details</Link>
+                    <Link to={`/films/${Number(id)}/details`} className="film-nav__link">Details</Link>
                   </li>
                   <li className={cn(
                     'film-nav__item',
-                    {'film-nav__item--active' : isReviewsActive }
+                    {'film-nav__item--active' : isTabActive.isReviewsActive }
                   )}
                   onClick={() => {
-                    setIsOverviewActive(false);
-                    setIsDetailsActive(false);
-                    setIsReviewsActive(true);}}
+                    setIsTabActive({...isTabActive,
+                      isDetailsActive: false,
+                      isOverviewActive: false,
+                      isReviewsActive: true});
+                  }}
                   >
-                    <Link to="#todo" className="film-nav__link">Reviews</Link>
+                    <Link to={`/films/${Number(id)}/reviews`} className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
-              { isOverviewActive
+              { isTabActive.isOverviewActive
                 ?
                 <FilmNavOverview films={films} />
                 :
                 ''}
-              { isDetailsActive
+              { isTabActive.isDetailsActive
                 ?
                 <FilmNavDetails films={films} />
                 :
                 ''}
-              { isReviewsActive
+              { isTabActive.isReviewsActive
                 ?
                 <FilmNavReviews films={films} reviews={reviews}/>
                 :
