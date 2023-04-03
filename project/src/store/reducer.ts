@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { chooseGenre, getFilteredFilms } from './action';
+import { chooseGenre, getFilteredFilms, loadFilms } from './action';
 import { GenreName } from '../const';
 import { filmsData } from '../mocks/films';
 
@@ -14,6 +14,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.activeGenre = action.payload;
     })
     .addCase(getFilteredFilms, (state, action) => {
+      state.films = action.payload;
+    })
+    .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
     });
 });
