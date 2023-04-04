@@ -1,11 +1,16 @@
 import {createReducer} from '@reduxjs/toolkit';
 import { chooseGenre, getFilteredFilms, loadFilms } from './action';
+import { Films } from '../types/films';
 import { GenreName } from '../const';
-import { filmsData } from '../mocks/films';
+//import { filmsData } from '../mocks/films';
 
-const initialState = {
+type InitialState = {
+  activeGenre: GenreName;
+  films: Films[];
+}
+const initialState: InitialState = {
   activeGenre: GenreName.ALL_GENRES,
-  films: filmsData
+  films: []
 };
 
 const reducer = createReducer(initialState, (builder) => {
