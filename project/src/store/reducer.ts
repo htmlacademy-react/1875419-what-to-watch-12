@@ -1,11 +1,19 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { chooseGenre, getFilteredFilms } from './action';
+import { chooseGenre, getFilteredFilms, loadFilms, setError, setFilmsDataLoadingStatus } from './action';
+import { Films } from '../types/films';
 import { GenreName } from '../const';
-import { filmsData } from '../mocks/films';
 
-const initialState = {
+type InitialState = {
+  activeGenre: GenreName;
+  films: Films[];
+  error: string | null;
+  isFilmsDataLoading: boolean;
+}
+const initialState: InitialState = {
   activeGenre: GenreName.ALL_GENRES,
-  films: filmsData
+  films: [],
+  error: null,
+  isFilmsDataLoading: false
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -15,6 +23,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getFilteredFilms, (state, action) => {
       state.films = action.payload;
+    })
+    .addCase(loadFilms, (state, action) => {
+      state.films = action.payload;
+    })
+    .addCase(setFilmsDataLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 
