@@ -6,9 +6,10 @@ import App from './components/app/app';
 import ErrorMessage from './components/error-message/error-message';
 import { filmsData } from './mocks/films';
 import { reviewsData } from './mocks/reviews';
-import { fetchFilmsAction } from './store/api-actions';
+import { fetchFilmsAction, checkAuthAction } from './store/api-actions';
 
 store.dispatch(fetchFilmsAction());
+store.dispatch(checkAuthAction());
 
 const favoriteFilmsData = filmsData.filter((film) => film.isFavorite );
 
@@ -19,7 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <ErrorMessage/>
+      <ErrorMessage />
       <App
         films = {filmsData}
         reviews = {reviewsData}
