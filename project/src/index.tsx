@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import App from './components/app/app';
+import ErrorMessage from './components/error-message/error-message';
 import { filmsData } from './mocks/films';
 import { reviewsData } from './mocks/reviews';
 
@@ -15,6 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
+      <ErrorMessage/>
       <App
         films = {filmsData}
         reviews = {reviewsData}
