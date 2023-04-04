@@ -6,6 +6,9 @@ import App from './components/app/app';
 import ErrorMessage from './components/error-message/error-message';
 import { filmsData } from './mocks/films';
 import { reviewsData } from './mocks/reviews';
+import { fetchFilmsAction } from './store/api-actions';
+
+store.dispatch(fetchFilmsAction());
 
 const favoriteFilmsData = filmsData.filter((film) => film.isFavorite );
 
