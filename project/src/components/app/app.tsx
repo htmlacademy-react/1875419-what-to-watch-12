@@ -3,7 +3,6 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Films } from '../../types/films';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
@@ -11,7 +10,6 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import { Reviews } from '../../types/reviews';
-import { useAppSelector } from '../../hooks';
 
 
 type MainScreenProp = {
@@ -22,14 +20,6 @@ type MainScreenProp = {
 
 
 function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
-  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
-
-  if (isFilmsDataLoading) {
-    return (
-      <LoadingScreen />
-    );
-  }
-
   return (
     <BrowserRouter>
       <Routes>
