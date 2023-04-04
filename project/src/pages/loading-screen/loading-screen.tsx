@@ -1,6 +1,12 @@
+import Spinner from '../../components/spinner/spinner';
+import '../../components/spinner/spinner.css';
+
 function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading ...</p>
+    <section className="catalog">
+      <p>Loading ...</p>
+      <Spinner />
+    </section>
   );
 }
 
