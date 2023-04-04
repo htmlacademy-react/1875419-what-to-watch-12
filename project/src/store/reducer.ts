@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { chooseGenre, getFilteredFilms, loadFilms } from './action';
+import { chooseGenre, getFilteredFilms, loadFilms, setError } from './action';
 import { Films } from '../types/films';
 import { GenreName } from '../const';
 //import { filmsData } from '../mocks/films';
@@ -7,10 +7,12 @@ import { GenreName } from '../const';
 type InitialState = {
   activeGenre: GenreName;
   films: Films[];
+  error: string | null;
 }
 const initialState: InitialState = {
   activeGenre: GenreName.ALL_GENRES,
-  films: []
+  films: [],
+  error: null
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -23,6 +25,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 
