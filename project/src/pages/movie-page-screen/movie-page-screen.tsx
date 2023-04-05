@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
-import CatalogLikeThis from '../../components/catalog-like-this/catalog-like-this';
+import CatalogLikeThis from '../../components/catalog/catalog-like-this';
 import { Films } from '../../types/films';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
