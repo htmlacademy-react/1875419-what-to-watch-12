@@ -1,7 +1,8 @@
-import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
+import { AppRoute } from '../../const';
+import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
 import { Films } from '../../types/films';
 import MainScreen from '../../pages/main-screen/main-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
@@ -20,6 +21,8 @@ type MainScreenProp = {
 
 
 function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -52,7 +55,7 @@ function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               <MyListScreen
                 myFilms={myFilms}
@@ -64,7 +67,7 @@ function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
           path={AppRoute.AddReview}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               <AddReviewScreen films={films} />
             </PrivateRoute>

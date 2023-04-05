@@ -1,12 +1,16 @@
+import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
+import { AppRoute } from '../../const';
 
 function UnauthorizedUserHeader(): JSX.Element {
   return (
-    <header className="page-header user-page__head">
+    <>
       <Logo />
 
-      <h1 className="page-title user-page__title">Sign in</h1>
-    </header>
+      <div className="user-block">
+        <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
+      </div>
+    </>
   );
 }
 
