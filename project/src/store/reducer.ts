@@ -9,6 +9,7 @@ type InitialState = {
   films: Films[];
   choosedFilm: Films | null;
   filmComments: Reviews[];
+  similarFilms: Films[];
   error: string | null;
   isFilmsDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
@@ -18,6 +19,7 @@ const initialState: InitialState = {
   films: [],
   choosedFilm: null,
   filmComments: [],
+  similarFilms: [],
   error: null,
   isFilmsDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -35,7 +37,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.films = action.payload;
     })
     .addCase(getSimilarFilms, (state, action) => {
-      state.films = action.payload;
+      state.similarFilms = action.payload;
     })
     .addCase(getFilmById, (state, action) => {
       state.choosedFilm = action.payload;

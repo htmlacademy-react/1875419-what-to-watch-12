@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import { AppDispatch, State } from '../types/state';
 import {Films} from '../types/films';
-import { loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getFilmComments } from './action';
+import { loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getFilmComments, getSimilarFilms } from './action';
 import {store} from './';
 import { AuthorizationStatus ,TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
@@ -41,9 +41,14 @@ export const fetchChoosedFilmAction = createAsyncThunk<Films, string, {
 }>(
   'films/fetchChoosedFilm',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Films>(`films/${id}`);
-    dispatch(getFilmById(data));
-    return data;
+
+    try {
+      const {data} = await api.get<Films>(`films/${id}`);
+      dispatch(getFilmById(data));
+      return data;
+    } catch {
+      throw Error;
+    }
   });
 
 export const fetchFilmCommentsAction = createAsyncThunk<Reviews[], string, {
@@ -55,6 +60,18 @@ export const fetchFilmCommentsAction = createAsyncThunk<Reviews[], string, {
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get<Reviews[]>(`comments/${id}`);
     dispatch(getFilmComments(data));
+    return data;
+  });
+
+export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'films/fetchFilmComments',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Films[]>(`films/${id}/similar`);
+    dispatch(getSimilarFilms(data));
     return data;
   });
 

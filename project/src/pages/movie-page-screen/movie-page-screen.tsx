@@ -1,37 +1,43 @@
-import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import CatalogLikeThis from '../../components/catalog/catalog-like-this';
+import { fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
 import PlayButton from '../../components/film-card-buttons/play-button';
 import UserBlock from '../../components/user-header/user-block';
-import { useAppDispatch } from '../../hooks';
-import { useEffect } from 'react';
-import { fetchFilmsAction, fetchChoosedFilmAction, fetchFilmCommentsAction } from '../../store/api-actions';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 
 function MoviePageScreen(): JSX.Element {
   const {id: idUrl} = useParams();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (idUrl) {
-      dispatch(fetchChoosedFilmAction(idUrl));
-      dispatch(fetchFilmCommentsAction(idUrl));
-    } else {
-      dispatch(fetchFilmsAction());
-    }
-  },[idUrl, dispatch]);
-
+  const navigate = useNavigate();
 
   const choosedFilm = useAppSelector((state) => state.choosedFilm);
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.similarFilms);
   const reviews = useAppSelector((state) => state.filmComments);
+
+  const filmsIds = useAppSelector((state) => state.films);
+  const filmsIdsData = Array.from(new Set((filmsIds.map((film) => film.id))));
+
+  const isFilmExist = filmsIdsData.includes(Number(idUrl));
+  //eslint-disable-next-line
+  console.log(isFilmExist);
+
+  useEffect(() => {
+    if (idUrl && isFilmExist) {
+      dispatch(fetchChoosedFilmAction(idUrl));
+      dispatch(fetchFilmCommentsAction(idUrl));
+      dispatch(fetchSimilarFilmsAction(idUrl));
+    } else {
+      navigate('/*');
+    }
+  },[idUrl, isFilmExist, dispatch, navigate]);
 
 
   const [isTabActive, setIsTabActive] = useState({
