@@ -11,6 +11,7 @@ import { fetchFilmsAction, checkAuthAction } from './store/api-actions';
 store.dispatch(fetchFilmsAction());
 store.dispatch(checkAuthAction());
 
+
 const favoriteFilmsData = filmsData.filter((film) => film.isFavorite );
 
 const root = ReactDOM.createRoot(

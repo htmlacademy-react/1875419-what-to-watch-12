@@ -11,11 +11,13 @@ function CatalogFilms(): JSX.Element {
   const films = useAppSelector((state) => state.films);
   const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
 
+
   if (isFilmsDataLoading) {
     return (
       <LoadingScreen />
     );
   }
+
 
   const GenreFilter: Record<GenreName, string> = {
     [GenreName.ALL_GENRES]: 'All genres',
