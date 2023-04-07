@@ -9,6 +9,7 @@ import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
 import PlayButton from '../../components/film-card-buttons/play-button';
+import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
@@ -18,16 +19,15 @@ function MoviePageScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const isUserAuthorized = useAppSelector((state) => state.authorizationStatus);
+
   const choosedFilm = useAppSelector((state) => state.choosedFilm);
   const films = useAppSelector((state) => state.similarFilms);
   const reviews = useAppSelector((state) => state.filmComments);
 
   const filmsIds = useAppSelector((state) => state.films);
   const filmsIdsData = Array.from(new Set((filmsIds.map((film) => film.id))));
-
   const isFilmExist = filmsIdsData.includes(Number(idUrl));
-  //eslint-disable-next-line
-  console.log(isFilmExist);
 
   useEffect(() => {
     if (idUrl && isFilmExist) {
@@ -58,8 +58,12 @@ function MoviePageScreen(): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
+            {isUserAuthorized === 'AUTH'
+              ?
+              <UserBlock />
+              :
+              <UnauthorizedUserHeader />}
 
-            <UserBlock />
           </header>
 
           <div className="film-card__wrap">
@@ -73,7 +77,11 @@ function MoviePageScreen(): JSX.Element {
               <div className="film-card__buttons">
                 <PlayButton id={choosedFilm?.id as number}/>
                 <AddToFavoriteButton />
-                <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>
+                {(isUserAuthorized !== 'AUTH')
+                  ?
+                  ''
+                  :
+                  <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -141,7 +149,7 @@ function MoviePageScreen(): JSX.Element {
                 ''}
               { isTabActive.isReviewsActive
                 ?
-                <FilmTabReviews films={films} reviews={reviews}/>
+                <FilmTabReviews reviews={reviews}/>
                 :
                 ''}
 

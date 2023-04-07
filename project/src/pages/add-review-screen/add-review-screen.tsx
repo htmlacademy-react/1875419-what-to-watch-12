@@ -1,6 +1,5 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import { Films } from '../../types/films';
-import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-header/user-block';
 import { useParams } from 'react-router-dom';
@@ -22,7 +21,6 @@ function AddReviewScreen({films}: ReviewProp): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <Logo />
 
           <Breadcrumbs films={films} />
 

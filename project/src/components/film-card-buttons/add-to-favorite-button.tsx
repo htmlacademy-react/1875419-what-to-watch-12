@@ -1,9 +1,3 @@
-// import { Films } from '../../types/films';
-
-// type FavoriteButtonProp = {
-//   myFilms: Films[];
-// }
-
 function AddToFavoriteButton(): JSX.Element {
   return (
     <button className="btn btn--list film-card__button" type="button">

@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addReviewAction } from '../../store/api-actions';
+import { NewReview } from '../../types/reviews';
 
 type EventProps = {
     target: {
@@ -8,6 +12,12 @@ type EventProps = {
 }
 
 function ReviewForm(): JSX.Element {
+  const choosedFilm = useAppSelector((state) => state.choosedFilm);
+
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     'rating': '',
     'review-text': ''
@@ -18,12 +28,30 @@ function ReviewForm(): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
+  const onSubmit = (reviewData: NewReview) => {
+    dispatch(addReviewAction(reviewData));
+    navigate(`/films/${choosedFilm?.id as number}`);
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    onSubmit({
+      comment: formData['review-text'],
+      rating: Number(formData.rating),
+    });
+  };
+
   return(
 
-    <form action="#" className="add-review__form" >
-      <div className="rating">
-        <div className="rating__stars">
-          <input onChange={fieldChangeHandler} className="rating__input" id="star-10" type="radio" name="rating" value="10" />
+    <form
+      action="#"
+      className="add-review__form"
+      onSubmit={handleSubmit}
+    >
+      <div className="rating" aria-required>
+        <div className="rating__stars" aria-required>
+          <input onChange={fieldChangeHandler} className="rating__input" id="star-10" type="radio" name="rating" value="10"/>
           <label className="rating__label" htmlFor="star-10">Rating 10</label>
 
           <input onChange={fieldChangeHandler} className="rating__input" id="star-9" type="radio" name="rating" value="9" />
@@ -56,7 +84,15 @@ function ReviewForm(): JSX.Element {
       </div>
 
       <div className="add-review__text">
-        <textarea onChange={fieldChangeHandler} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+        <textarea
+          onChange={fieldChangeHandler}
+          className="add-review__textarea"
+          name="review-text" id="review-text"
+          placeholder="Review text"
+          minLength={50} maxLength={400}
+          required
+        >
+        </textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>
         </div>

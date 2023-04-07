@@ -15,6 +15,8 @@ export const getSimilarFilms = createAction<Films[]>('getSimilarFilms');
 
 export const getFilmComments = createAction<Reviews[]>('getFilmComments');
 
+export const addReview = createAction<Reviews[]>('addReview');
+
 export const setError = createAction<string | null>('setError');
 
 export const setFilmsDataLoadingStatus = createAction<boolean>('setFilmsDataLoadingStatus');

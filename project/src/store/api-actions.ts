@@ -9,6 +9,7 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
 import { Reviews } from '../types/reviews';
+import { NewReview } from '../types/reviews';
 
 
 export const clearErrorAction = createAsyncThunk(
@@ -75,6 +76,23 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
     return data;
   });
 
+export const addReviewAction = createAsyncThunk<Reviews[], NewReview, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'films/review',
+    async ({comment, rating}, {dispatch, getState, extra: api}) => {
+      const state = getState();
+      const id = state.choosedFilm?.id;
+      //eslint-disable-next-line
+    debugger;
+      const {data} = await api.post<Reviews[]>(`comments/${id as number}`, {comment, rating});
+      dispatch(getFilmComments);
+      return data;
+    },
+  );
+
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -98,6 +116,8 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
+    //eslint-disable-next-line
+    debugger;
     const {data: {token}} = await api.post<UserData>('login', {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));

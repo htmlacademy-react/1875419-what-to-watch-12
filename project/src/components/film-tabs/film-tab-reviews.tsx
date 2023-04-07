@@ -1,18 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { Films } from '../../types/films';
-import useFilmChoosed from '../../hooks/use-film-choosed';
 import { Reviews } from '../../types/reviews';
 
 const LOCALE = 'en-US';
 
 type ReviewsProp = {
   reviews: Reviews[];
-  films: Films[];
 }
 
-function FilmTabReviews({reviews, films}: ReviewsProp): JSX.Element {
-  const filmChoosed = useFilmChoosed(films);
-  const filmReviews = reviews.filter((review) => review.id === filmChoosed?.id);
+function FilmTabReviews({reviews}: ReviewsProp): JSX.Element {
+  const filmReviews = reviews;
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
