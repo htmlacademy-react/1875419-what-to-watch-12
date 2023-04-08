@@ -12,6 +12,7 @@ import PlayButton from '../../components/film-card-buttons/play-button';
 import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { Films } from '../../types/films';
 
 
 function MoviePageScreen(): JSX.Element {
@@ -139,12 +140,12 @@ function MoviePageScreen(): JSX.Element {
               </nav>
               { isTabActive.isOverviewActive
                 ?
-                <FilmTabOverview films={films} />
+                <FilmTabOverview film={choosedFilm as Films} />
                 :
                 ''}
               { isTabActive.isDetailsActive
                 ?
-                <FilmTabDetails films={films} />
+                <FilmTabDetails film={choosedFilm as Films} />
                 :
                 ''}
               { isTabActive.isReviewsActive
