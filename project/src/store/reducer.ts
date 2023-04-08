@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { chooseGenre, getFilteredFilms, loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getSimilarFilms, getFilmComments, addReview } from './action';
+import { chooseGenre, getFilteredFilms, loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getSimilarFilms, getFilmComments, addReview, loadPromoFilm, getFavoriteFilms } from './action';
 import { Films } from '../types/films';
 import { GenreName, AuthorizationStatus } from '../const';
 import { Reviews } from '../types/reviews';
@@ -7,9 +7,11 @@ import { Reviews } from '../types/reviews';
 type InitialState = {
   activeGenre: GenreName;
   films: Films[];
+  promoFilm: Films | null;
   choosedFilm: Films | null;
   filmComments: Reviews[];
   similarFilms: Films[];
+  favoriteFilms: Films[];
   error: string | null;
   isFilmsDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
@@ -17,9 +19,11 @@ type InitialState = {
 const initialState: InitialState = {
   activeGenre: GenreName.ALL_GENRES,
   films: [],
+  promoFilm: null,
   choosedFilm: null,
   filmComments: [],
   similarFilms: [],
+  favoriteFilms: [],
   error: null,
   isFilmsDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -36,14 +40,20 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
     })
-    .addCase(getSimilarFilms, (state, action) => {
-      state.similarFilms = action.payload;
+    .addCase(loadPromoFilm, (state, action) =>{
+      state.promoFilm = action.payload;
     })
     .addCase(getFilmById, (state, action) => {
       state.choosedFilm = action.payload;
     })
     .addCase(getFilmComments, (state, action) => {
       state.filmComments = action.payload;
+    })
+    .addCase(getSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
+    })
+    .addCase(getFavoriteFilms, (state, action) => {
+      state.favoriteFilms = action.payload;
     })
     .addCase(addReview, (state, action) => {
       state.filmComments = action.payload;

@@ -9,11 +9,15 @@ export const getFilteredFilms = createAction<Films[]>('getFilteredFilms');
 
 export const loadFilms = createAction<Films[]>('loadFilms');
 
+export const loadPromoFilm = createAction<Films>('loadPromoFilm');
+
 export const getFilmById = createAction<Films>('getFilmById');
 
 export const getSimilarFilms = createAction<Films[]>('getSimilarFilms');
 
 export const getFilmComments = createAction<Reviews[]>('getFilmComments');
+
+export const getFavoriteFilms = createAction<Films[]>('getFavoriteFilms');
 
 export const addReview = createAction<Reviews[]>('addReview');
 

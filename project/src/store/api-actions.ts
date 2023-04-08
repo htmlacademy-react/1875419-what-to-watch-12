@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import { AppDispatch, State } from '../types/state';
 import {Films} from '../types/films';
-import { loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getFilmComments, getSimilarFilms } from './action';
+import { loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
 import {store} from './';
 import { AuthorizationStatus ,TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
@@ -35,6 +35,19 @@ export const fetchFilmsAction = createAsyncThunk<void, undefined, {
     dispatch(loadFilms(data));
   });
 
+export const fetchPromoFilmAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'films/fetchPromoFilm',
+  async (_arg, {dispatch, extra: api}) => {
+    dispatch(setFilmsDataLoadingStatus(true));
+    const {data} = await api.get<Films>('promo');
+    dispatch(setFilmsDataLoadingStatus(false));
+    dispatch(loadPromoFilm(data));
+  });
+
 export const fetchChoosedFilmAction = createAsyncThunk<Films, string, {
   dispatch: AppDispatch;
   state: State;
@@ -48,6 +61,7 @@ export const fetchChoosedFilmAction = createAsyncThunk<Films, string, {
       dispatch(getFilmById(data));
       return data;
     } catch {
+      //TODO: обработка всех ошибок в запросах
       throw Error;
     }
   });
@@ -75,6 +89,17 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
     dispatch(getSimilarFilms(data));
     return data;
   });
+
+export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'user/fetchFavoriteFilms',
+    async (_arg, {dispatch, extra: api}) => {
+      const {data} = await api.get<Films[]>('favorite');
+      dispatch(getFavoriteFilms(data));
+    });
 
 export const addReviewAction = createAsyncThunk<Reviews[], NewReview, {
     dispatch: AppDispatch;
