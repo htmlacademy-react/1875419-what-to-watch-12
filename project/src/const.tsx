@@ -51,3 +51,6 @@ export enum GenreName {
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const DEFAULT_RENDERED_FILMS_QUANTITY = 8;
+export const FILMS_TO_RENDER_QUANTITY = 8;

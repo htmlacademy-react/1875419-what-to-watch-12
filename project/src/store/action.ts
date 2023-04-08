@@ -5,9 +5,11 @@ import { Reviews } from '../types/reviews';
 
 export const chooseGenre = createAction<GenreName>('chooseGenre');
 
-export const getFilteredFilms = createAction<Films[]>('getFilteredFilms');
-
 export const loadFilms = createAction<Films[]>('loadFilms');
+
+export const renderMoreFilms = createAction('/renderedFilms');
+
+export const resetRenderedFilms = createAction('/renderedFilmsByDefault');
 
 export const loadPromoFilm = createAction<Films>('loadPromoFilm');
 

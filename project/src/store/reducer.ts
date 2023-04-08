@@ -1,12 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { chooseGenre, getFilteredFilms, loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getSimilarFilms, getFilmComments, addReview, loadPromoFilm, getFavoriteFilms } from './action';
+import { chooseGenre, loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getSimilarFilms, getFilmComments, addReview, loadPromoFilm, getFavoriteFilms, renderMoreFilms, resetRenderedFilms } from './action';
 import { Films } from '../types/films';
-import { GenreName, AuthorizationStatus } from '../const';
+import { GenreName, AuthorizationStatus, DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY } from '../const';
 import { Reviews } from '../types/reviews';
 
 type InitialState = {
   activeGenre: GenreName;
   films: Films[];
+  renderedFilmsQuantity: number;
   promoFilm: Films | null;
   choosedFilm: Films | null;
   filmComments: Reviews[];
@@ -19,6 +20,7 @@ type InitialState = {
 const initialState: InitialState = {
   activeGenre: GenreName.ALL_GENRES,
   films: [],
+  renderedFilmsQuantity: DEFAULT_RENDERED_FILMS_QUANTITY,
   promoFilm: null,
   choosedFilm: null,
   filmComments: [],
@@ -32,13 +34,17 @@ const initialState: InitialState = {
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(chooseGenre, (state, action) => {
+      state.renderedFilmsQuantity = DEFAULT_RENDERED_FILMS_QUANTITY;
       state.activeGenre = action.payload;
-    })
-    .addCase(getFilteredFilms, (state, action) => {
-      state.films = action.payload;
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
+    })
+    .addCase(renderMoreFilms, (state) => {
+      state.renderedFilmsQuantity += FILMS_TO_RENDER_QUANTITY;
+    })
+    .addCase(resetRenderedFilms, (state) => {
+      state.renderedFilmsQuantity = DEFAULT_RENDERED_FILMS_QUANTITY;
     })
     .addCase(loadPromoFilm, (state, action) =>{
       state.promoFilm = action.payload;

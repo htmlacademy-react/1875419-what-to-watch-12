@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-actions';
 import { NewReview } from '../../types/reviews';
 
+const REVIEW_TEXT_MIN_COUNT = 50;
+const REVIEW_TEXT_MAX_COUNT = 400;
 
 function ReviewForm(): JSX.Element {
   const choosedFilm = useAppSelector((state) => state.choosedFilm);
@@ -32,7 +34,7 @@ function ReviewForm(): JSX.Element {
 
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
-    if (formData.rating && formData['review-text'].length >= 50 && formData['review-text'].length <= 400) {
+    if (formData.rating && formData['review-text'].length >= REVIEW_TEXT_MIN_COUNT && formData['review-text'].length <= REVIEW_TEXT_MAX_COUNT) {
       setDisabled(false);
     } else {
       setDisabled(true);
