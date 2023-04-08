@@ -31,6 +31,7 @@ function MoviePageScreen(): JSX.Element {
   const isFilmExist = filmsIdsData.includes(Number(idUrl));
 
   useEffect(() => {
+    //TODO: не работает переход к сущестующему фильму при обращении через адресную строку
     if (idUrl && isFilmExist) {
       dispatch(fetchChoosedFilmAction(idUrl));
       dispatch(fetchFilmCommentsAction(idUrl));

@@ -84,6 +84,7 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
   extra: AxiosInstance;
 }>(
   'films/fetchFilmComments',
+  // TODO: обработка ошибок
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get<Films[]>(`films/${id}/similar`);
     dispatch(getSimilarFilms(data));
@@ -96,6 +97,7 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
     extra: AxiosInstance;
   }>(
     'user/fetchFavoriteFilms',
+    // TODO: обработка ошибок
     async (_arg, {dispatch, extra: api}) => {
       const {data} = await api.get<Films[]>('favorite');
       dispatch(getFavoriteFilms(data));
@@ -107,11 +109,10 @@ export const addReviewAction = createAsyncThunk<Reviews[], NewReview, {
     extra: AxiosInstance;
   }>(
     'films/review',
+    // TODO: обработка ошибок
     async ({comment, rating}, {dispatch, getState, extra: api}) => {
       const state = getState();
       const id = state.choosedFilm?.id;
-      //eslint-disable-next-line
-    debugger;
       const {data} = await api.post<Reviews[]>(`comments/${id as number}`, {comment, rating});
       dispatch(getFilmComments);
       return data;
@@ -141,8 +142,6 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    //eslint-disable-next-line
-    debugger;
     const {data: {token}} = await api.post<UserData>('login', {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));

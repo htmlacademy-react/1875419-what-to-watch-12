@@ -56,7 +56,7 @@ function CatalogFilms(): JSX.Element {
           )
           )}
       </div>
-
+      {/* TODO: доработать функциональность кнопки. при переключении фильтров - фигня*/}
       {renderedFilmsQuantity >= films.length ? null :
         <CatalogMoreBtn />}
     </section>

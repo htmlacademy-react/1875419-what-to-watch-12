@@ -1,6 +1,6 @@
 function AddToFavoriteButton(): JSX.Element {
 
-  //TODO: thunk action
+  //TODO: thunk action. дописать запрос
   // const addToFavoriteHandler = () => {
   // }
   return (

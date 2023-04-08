@@ -34,6 +34,7 @@ function ReviewForm(): JSX.Element {
 
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
+    // TODO: плохой UI. проверка не срабатывает
     if (formData.rating && formData['review-text'].length >= REVIEW_TEXT_MIN_COUNT && formData['review-text'].length <= REVIEW_TEXT_MAX_COUNT) {
       setDisabled(false);
     } else {

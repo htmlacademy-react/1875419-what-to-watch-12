@@ -11,6 +11,7 @@ function FilmTabReviews({reviews}: ReviewsProp): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
+        {/* TODO: сделать вывод по три комментария в колонке */}
         {filmReviews.map((review) => {
           const keyValue = `${review.id}-${review.user.id}-${review.date}`;
           const date = new Date(review.date);

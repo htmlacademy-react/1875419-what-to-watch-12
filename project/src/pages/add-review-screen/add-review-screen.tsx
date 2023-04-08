@@ -18,7 +18,7 @@ function AddReviewScreen(): JSX.Element {
         <header className="page-header">
 
           <Breadcrumbs film={filmChoosed} />
-
+          {/* TODO: засунуть крошки в юзер блок */}
           <UserBlock />
         </header>
 
