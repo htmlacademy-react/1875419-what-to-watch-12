@@ -1,5 +1,6 @@
 export enum AppRoute {
   Main = '/',
+  Genre = '/:genre',
   SignIn = '/login',
   MyList = '/mylist',
   Film = '/films/:id',
@@ -47,15 +48,6 @@ export function FilmRating(rating: number | undefined): string {
 
 export enum GenreName {
   ALL_GENRES = 'All genres',
-  COMEDIES = 'Comedies',
-  CRIME = 'Crime',
-  DOCUMENTARY = 'Documentary',
-  DRAMAS = 'Dramas',
-  HORROR = 'Horror',
-  KIDS_AND_FAMILY = 'Kids & Family',
-  ROMANCE = 'Romance',
-  SCI_FI = 'Sci-Fi',
-  THRILLERS = 'Thrillers',
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;

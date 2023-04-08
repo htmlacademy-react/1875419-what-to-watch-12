@@ -19,30 +19,21 @@ function CatalogFilms(): JSX.Element {
   }
 
 
-  const GenreFilter: Record<GenreName, string> = {
-    [GenreName.ALL_GENRES]: 'All genres',
-    [GenreName.COMEDIES]: 'Comedy',
-    [GenreName.CRIME]: 'Crime',
-    [GenreName.DOCUMENTARY]: 'Documentary',
-    [GenreName.DRAMAS]: 'Drama',
-    [GenreName.HORROR]: 'Horror',
-    [GenreName.KIDS_AND_FAMILY]: 'Kids & Family',
-    [GenreName.ROMANCE]: 'Romance',
-    [GenreName.SCI_FI]: 'Sci-Fi',
-    [GenreName.THRILLERS]: 'Thriller',
-  };
+  const filmsGenres = ['All genres'];
+  const filmsGenresSet = Array.from(new Set(films.map((film) => film.genre)));
+  filmsGenresSet.forEach((genre) => filmsGenres.push(genre));
 
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <CatalogGenresList />
+      <CatalogGenresList filmsGenres={filmsGenres} />
       <div className="catalog__films-list">
         {films.filter((film) => {
-          if (GenreFilter[activeGenre] === GenreName.ALL_GENRES) {
+          if (activeGenre === GenreName.ALL_GENRES) {
             return true;
           }
-          return film.genre === GenreFilter[activeGenre];
+          return film.genre === activeGenre;
         })
           .map((film) => (
             <FilmCard
