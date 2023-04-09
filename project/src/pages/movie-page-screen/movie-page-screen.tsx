@@ -1,64 +1,89 @@
-import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import CatalogLikeThis from '../../components/catalog/catalog-like-this';
-import { Films } from '../../types/films';
+import { fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
-import { Reviews } from '../../types/reviews';
-import useFilmChoosed from '../../hooks/use-film-choosed';
+import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
 import UserBlock from '../../components/user-header/user-block';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { Films } from '../../types/films';
 
-type MoviePageProp = {
-  films: Films[];
-  myFilms: Films[];
-  reviews: Reviews[];
-}
 
-function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element {
+function MoviePageScreen(): JSX.Element {
+  const {id: idUrl} = useParams();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const isUserAuthorized = useAppSelector((state) => state.authorizationStatus);
+
+  const choosedFilm = useAppSelector((state) => state.choosedFilm);
+  const films = useAppSelector((state) => state.similarFilms);
+  const reviews = useAppSelector((state) => state.filmComments);
+
+  const filmsIds = useAppSelector((state) => state.films);
+  const filmsIdsData = Array.from(new Set((filmsIds.map((film) => film.id))));
+  const isFilmExist = filmsIdsData.includes(Number(idUrl));
+
+  useEffect(() => {
+    //TODO: не работает переход к сущестующему фильму при обращении через адресную строку
+    if (idUrl && isFilmExist) {
+      dispatch(fetchChoosedFilmAction(idUrl));
+      dispatch(fetchFilmCommentsAction(idUrl));
+      dispatch(fetchSimilarFilmsAction(idUrl));
+    } else {
+      navigate('/*');
+    }
+  },[idUrl, isFilmExist, dispatch, navigate]);
+
+
   const [isTabActive, setIsTabActive] = useState({
     isOverviewActive: true,
     isDetailsActive: false,
     isReviewsActive: false
   });
 
-  const {id} = useParams();
-
-  const filmChoosed = useFilmChoosed(films);
 
   return (
     <>
-      <section className="film-card film-card--full" style={{backgroundColor: filmChoosed?.backgroundColor}}>
+      <section className="film-card film-card--full" style={{backgroundColor: choosedFilm?.backgroundColor}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={filmChoosed?.backgroundImage} alt={filmChoosed?.name} />
+            <img src={choosedFilm?.backgroundImage} alt={choosedFilm?.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            <Logo />
+            {isUserAuthorized === 'AUTH'
+              ?
+              <UserBlock />
+              :
+              <UnauthorizedUserHeader />}
 
-            <UserBlock />
           </header>
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmChoosed?.name}</h2>
+              <h2 className="film-card__title">{choosedFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmChoosed?.genre}</span>
-                <span className="film-card__year">{filmChoosed?.released}</span>
+                <span className="film-card__genre">{choosedFilm?.genre}</span>
+                <span className="film-card__year">{choosedFilm?.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <PlayButton id={filmChoosed?.id as number}/>
-                <AddToFavoriteButton myFilms={myFilms}/>
-                <Link to={`/films/${Number(id)}/review`} className="btn film-card__button">Add review</Link>
+                <PlayButton id={choosedFilm?.id as number}/>
+                <AddToFavoriteButton />
+                {(isUserAuthorized !== 'AUTH')
+                  ?
+                  ''
+                  :
+                  <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -67,7 +92,7 @@ function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element 
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={filmChoosed?.posterImage} alt={filmChoosed?.name} width="218" height="327" />
+              <img src={choosedFilm?.posterImage} alt={choosedFilm?.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -84,7 +109,7 @@ function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element 
                       isReviewsActive: false});
                   }}
                   >
-                    <Link to={`/films/${Number(id)}`} className="film-nav__link">Overview</Link>
+                    <Link to={`/films/${Number(idUrl)}`} className="film-nav__link">Overview</Link>
                   </li>
                   <li className={cn(
                     'film-nav__item',
@@ -97,7 +122,7 @@ function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element 
                       isReviewsActive: false});
                   }}
                   >
-                    <Link to={`/films/${Number(id)}/details`} className="film-nav__link">Details</Link>
+                    <Link to={`/films/${Number(idUrl)}/details`} className="film-nav__link">Details</Link>
                   </li>
                   <li className={cn(
                     'film-nav__item',
@@ -110,23 +135,23 @@ function MoviePageScreen({films, myFilms, reviews}: MoviePageProp): JSX.Element 
                       isReviewsActive: true});
                   }}
                   >
-                    <Link to={`/films/${Number(id)}/reviews`} className="film-nav__link">Reviews</Link>
+                    <Link to={`/films/${Number(idUrl)}/reviews`} className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
               { isTabActive.isOverviewActive
                 ?
-                <FilmTabOverview films={films} />
+                <FilmTabOverview film={choosedFilm as Films} />
                 :
                 ''}
               { isTabActive.isDetailsActive
                 ?
-                <FilmTabDetails films={films} />
+                <FilmTabDetails film={choosedFilm as Films} />
                 :
                 ''}
               { isTabActive.isReviewsActive
                 ?
-                <FilmTabReviews films={films} reviews={reviews}/>
+                <FilmTabReviews reviews={reviews}/>
                 :
                 ''}
 

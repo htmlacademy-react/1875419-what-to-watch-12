@@ -1,15 +1,24 @@
+import { useEffect } from 'react';
 import CatalogGenresList from './catalog-genres-list';
 import CatalogMoreBtn from './catalog-more-btn';
 import { GenreName } from '../../const';
 import FilmCard from '../film-card/film-card';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { resetRenderedFilms } from '../../store/action';
 
 
 function CatalogFilms(): JSX.Element {
+  const dispatch = useAppDispatch();
   const activeGenre = useAppSelector((state) => state.activeGenre);
   const films = useAppSelector((state) => state.films);
   const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
+  const renderedFilmsQuantity = useAppSelector((state) => state.renderedFilmsQuantity);
+
+  useEffect(() => () => {
+    dispatch(resetRenderedFilms());
+  }, [dispatch]);
+
 
   if (isFilmsDataLoading) {
     return (
@@ -17,31 +26,24 @@ function CatalogFilms(): JSX.Element {
     );
   }
 
-  const GenreFilter: Record<GenreName, string> = {
-    [GenreName.ALL_GENRES]: 'All genres',
-    [GenreName.COMEDIES]: 'Comedy',
-    [GenreName.CRIME]: 'Crime',
-    [GenreName.DOCUMENTARY]: 'Documentary',
-    [GenreName.DRAMAS]: 'Drama',
-    [GenreName.HORROR]: 'Horror',
-    [GenreName.KIDS_AND_FAMILY]: 'Kids & Family',
-    [GenreName.ROMANCE]: 'Romance',
-    [GenreName.SCI_FI]: 'Sci-Fi',
-    [GenreName.THRILLERS]: 'Thriller',
-  };
+
+  const filmsGenres = ['All genres'];
+  const filmsGenresSet = Array.from(new Set(films.map((film) => film.genre)));
+  filmsGenresSet.forEach((genre) => filmsGenres.push(genre));
 
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <CatalogGenresList />
+      <CatalogGenresList filmsGenres={filmsGenres} />
       <div className="catalog__films-list">
-        {films.filter((film) => {
-          if (GenreFilter[activeGenre] === GenreName.ALL_GENRES) {
-            return true;
-          }
-          return film.genre === GenreFilter[activeGenre];
-        })
+        {films.slice(0, renderedFilmsQuantity)
+          .filter((film) => {
+            if (activeGenre === GenreName.ALL_GENRES) {
+              return true;
+            }
+            return film.genre === activeGenre;
+          })
           .map((film) => (
             <FilmCard
               key={film.id}
@@ -54,8 +56,9 @@ function CatalogFilms(): JSX.Element {
           )
           )}
       </div>
-
-      <CatalogMoreBtn />
+      {/* TODO: доработать функциональность кнопки. при переключении фильтров - фигня*/}
+      {renderedFilmsQuantity >= films.length ? null :
+        <CatalogMoreBtn />}
     </section>
   );
 }

@@ -3,24 +3,15 @@ import { useAppSelector } from '../../hooks';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import { AppRoute } from '../../const';
 import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
-import { Films } from '../../types/films';
 import MainScreen from '../../pages/main-screen/main-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
-import { Reviews } from '../../types/reviews';
 
 
-type MainScreenProp = {
-  films: Films[];
-  reviews: Reviews[];
-  myFilms: Films[];
-}
-
-
-function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   return (
@@ -29,10 +20,7 @@ function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
         <Route
           path={AppRoute.Main}
           element = {
-            <MainScreen
-              films={films}
-              myFilms={myFilms}
-            />
+            <MainScreen />
           }
         />
         <Route
@@ -41,15 +29,15 @@ function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
         />
         <Route
           path={AppRoute.Film}
-          element={<MoviePageScreen films={films} myFilms={myFilms} reviews={reviews} />}
+          element={<MoviePageScreen />}
         />
         <Route
           path={AppRoute.FilmDetails}
-          element={<MoviePageScreen films={films} myFilms={myFilms} reviews={reviews} />}
+          element={<MoviePageScreen />}
         />
         <Route
           path={AppRoute.FilmReviews}
-          element={<MoviePageScreen films={films} myFilms={myFilms} reviews={reviews} />}
+          element={<MoviePageScreen />}
         />
         <Route
           path={AppRoute.MyList}
@@ -57,9 +45,7 @@ function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <MyListScreen
-                myFilms={myFilms}
-              />
+              <MyListScreen />
             </PrivateRoute>
           }
         />
@@ -69,13 +55,13 @@ function App({films, reviews, myFilms}: MainScreenProp): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <AddReviewScreen films={films} />
+              <AddReviewScreen />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Player}
-          element={<PlayerScreen films={films}/>}
+          element={<PlayerScreen />}
         />
         <Route
           path="*"

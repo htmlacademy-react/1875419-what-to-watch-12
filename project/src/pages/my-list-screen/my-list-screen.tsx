@@ -1,13 +1,11 @@
 import AuthorizedUserHeader from '../../components/user-header/authorized-user-header';
-import { Films } from '../../types/films';
 import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
+import { useAppSelector } from '../../hooks';
 
-type MyListProp = {
-  myFilms: Films[];
-}
 
-function MyListScreen({myFilms}: MyListProp): JSX.Element {
+function MyListScreen(): JSX.Element {
+  const myFilms = useAppSelector((state) => state.favoriteFilms);
   return (
     <div className="user-page">
       <AuthorizedUserHeader myFilms={myFilms} />
