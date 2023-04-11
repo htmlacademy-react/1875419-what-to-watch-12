@@ -52,3 +52,9 @@ export enum GenreName {
 
 export const DEFAULT_RENDERED_FILMS_QUANTITY = 8;
 export const FILMS_TO_RENDER_QUANTITY = 8;
+
+export enum NameSpace {
+  Films = 'FILMS',
+  Genres = 'GENRES',
+  User = 'USER',
+}

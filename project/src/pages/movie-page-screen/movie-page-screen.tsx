@@ -32,7 +32,6 @@ function MoviePageScreen(): JSX.Element {
   const isFilmExist = filmsIdsData.includes(Number(idUrl));
 
   useEffect(() => {
-    //TODO: не работает переход к сущестующему фильму при обращении через адресную строку
     if (idUrl && isFilmExist) {
       dispatch(fetchChoosedFilmAction(idUrl));
       dispatch(fetchFilmCommentsAction(Number(idUrl)));
@@ -137,22 +136,9 @@ function MoviePageScreen(): JSX.Element {
                   </li>
                 </ul>
               </nav>
-              { isTabActive.isOverviewActive
-                ?
-                <FilmTabOverview film={choosedFilm as Films} />
-                :
-                ''}
-              { isTabActive.isDetailsActive
-                ?
-                <FilmTabDetails film={choosedFilm as Films} />
-                :
-                ''}
-              { isTabActive.isReviewsActive
-                ?
-                <FilmTabReviews reviews={reviews}/>
-                :
-                ''}
-
+              { isTabActive.isOverviewActive && <FilmTabOverview film={choosedFilm as Films} />}
+              { isTabActive.isDetailsActive && <FilmTabDetails film={choosedFilm as Films} />}
+              { isTabActive.isReviewsActive && <FilmTabReviews reviews={reviews}/>}
             </div>
           </div>
         </div>

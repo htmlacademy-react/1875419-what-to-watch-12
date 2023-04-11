@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { chooseGenre, loadFilms, setFilmsDataLoadingStatus, requireAuthorization, getFilmById, getSimilarFilms, getFilmComments, addReview, loadPromoFilm, getFavoriteFilms, renderMoreFilms, resetRenderedFilms } from './action';
+import { chooseGenre, loadFilms, setFilmsDataLoadingStatus, getFilmById, getSimilarFilms, getFilmComments, addReview, loadPromoFilm, getFavoriteFilms, renderMoreFilms, resetRenderedFilms } from './action';
 import { Films } from '../types/films';
-import { GenreName, AuthorizationStatus, DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY } from '../const';
+import { GenreName, DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY } from '../const';
 import { Reviews } from '../types/reviews';
 
 type InitialState = {
@@ -14,7 +14,6 @@ type InitialState = {
   similarFilms: Films[];
   favoriteFilms: Films[];
   isFilmsDataLoading: boolean;
-  authorizationStatus: AuthorizationStatus;
 }
 const initialState: InitialState = {
   activeGenre: GenreName.ALL_GENRES,
@@ -26,7 +25,6 @@ const initialState: InitialState = {
   similarFilms: [],
   favoriteFilms: [],
   isFilmsDataLoading: false,
-  authorizationStatus: AuthorizationStatus.Unknown,
 };
 //TODO: написать слайсы
 const reducer = createReducer(initialState, (builder) => {
@@ -64,9 +62,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFilmsDataLoadingStatus, (state, action) => {
       state.isFilmsDataLoading = action.payload;
-    })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
     });
 });
 

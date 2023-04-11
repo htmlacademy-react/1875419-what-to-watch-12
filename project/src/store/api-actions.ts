@@ -3,8 +3,7 @@ import axios,{ AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../types/state';
 import {Films} from '../types/films';
-import { loadFilms, setFilmsDataLoadingStatus, requireAuthorization, getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
-import { AuthorizationStatus } from '../const';
+import { loadFilms, setFilmsDataLoadingStatus, getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
@@ -139,15 +138,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    try {
-      await api.get('login');
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch(error) {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-      if (axios.isAxiosError(error)) {
-        toast.error(error.message);
-      }
-    }
+    await api.get('login');
   }
 );
 
@@ -161,7 +152,6 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     try {
       const {data: {token}} = await api.post<UserData>('login', {email, password});
       saveToken(token);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.message);
@@ -180,7 +170,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     try {
       await api.delete('logout');
       dropToken();
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.message);
