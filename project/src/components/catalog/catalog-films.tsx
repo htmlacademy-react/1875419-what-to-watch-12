@@ -17,7 +17,7 @@ function CatalogFilms(): JSX.Element {
 
   useEffect(() => () => {
     dispatch(resetRenderedFilms());
-  }, [dispatch]);
+  }, [dispatch, renderedFilmsQuantity]);
 
 
   if (isFilmsDataLoading) {
@@ -56,7 +56,7 @@ function CatalogFilms(): JSX.Element {
           )
           )}
       </div>
-      {/* TODO: доработать функциональность кнопки. при переключении фильтров - фигня*/}
+      {/* TODO:  useState - массив фильмов по выбранному фильтру, в useEffect - сетить отфильрованный массив.*/}
       {renderedFilmsQuantity >= films.length ? null :
         <CatalogMoreBtn />}
     </section>

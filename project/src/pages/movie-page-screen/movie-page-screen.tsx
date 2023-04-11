@@ -34,7 +34,7 @@ function MoviePageScreen(): JSX.Element {
     //TODO: не работает переход к сущестующему фильму при обращении через адресную строку
     if (idUrl && isFilmExist) {
       dispatch(fetchChoosedFilmAction(idUrl));
-      dispatch(fetchFilmCommentsAction(idUrl));
+      dispatch(fetchFilmCommentsAction(Number(idUrl)));
       dispatch(fetchSimilarFilmsAction(idUrl));
     } else {
       navigate('/*');
@@ -79,11 +79,7 @@ function MoviePageScreen(): JSX.Element {
               <div className="film-card__buttons">
                 <PlayButton id={choosedFilm?.id as number}/>
                 <AddToFavoriteButton />
-                {(isUserAuthorized !== 'AUTH')
-                  ?
-                  ''
-                  :
-                  <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>}
+                {(isUserAuthorized === 'AUTH') && <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
