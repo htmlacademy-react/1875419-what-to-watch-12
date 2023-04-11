@@ -5,6 +5,7 @@ import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import {AppRoute} from '../../const';
 
+
 function SignInForm(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);

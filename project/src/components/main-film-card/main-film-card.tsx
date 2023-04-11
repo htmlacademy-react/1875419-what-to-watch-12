@@ -1,5 +1,6 @@
 import AddToFavoriteButton from '../film-card-buttons/add-to-favorite-button';
 import { AuthorizationStatus } from '../../const';
+import Logo from '../logo/logo';
 import PlayButton from '../film-card-buttons/play-button';
 import UserBlock from '../user-header/user-block';
 import { useAppSelector } from '../../hooks';
@@ -18,6 +19,7 @@ function MainFilmCard() : JSX.Element {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header film-card__head">
+        <Logo />
         {(isUserAuthorized === AuthorizationStatus.Auth) ? <UserBlock /> : <UnauthorizedUserHeader/>}
 
       </header>

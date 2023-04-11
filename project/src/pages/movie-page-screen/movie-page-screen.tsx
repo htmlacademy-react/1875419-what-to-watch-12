@@ -4,15 +4,16 @@ import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import CatalogLikeThis from '../../components/catalog/catalog-like-this';
 import { fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { Films } from '../../types/films';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
+import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
 import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Films } from '../../types/films';
 
 
 function MoviePageScreen(): JSX.Element {
@@ -60,6 +61,7 @@ function MoviePageScreen(): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
+            <Logo />
             {isUserAuthorized === 'AUTH'
               ?
               <UserBlock />

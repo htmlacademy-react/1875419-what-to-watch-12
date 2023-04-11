@@ -1,4 +1,5 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppSelector } from '../../hooks';
@@ -16,9 +17,8 @@ function AddReviewScreen(): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-
+          <Logo />
           <Breadcrumbs film={filmChoosed} />
-          {/* TODO: засунуть крошки в юзер блок */}
           <UserBlock />
         </header>
 
