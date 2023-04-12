@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { chooseGenre } from '../../store/action';
+import { chooseGenre } from '../../store/genres-data/genres-data.slice';
 import { GenreName } from '../../const';
 
 type GenreItemProp = {

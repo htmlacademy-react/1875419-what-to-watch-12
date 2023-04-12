@@ -1,9 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
-import { GenreName, AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../const';
 import { Films } from '../types/films';
 import { Reviews } from '../types/reviews';
 
-export const chooseGenre = createAction<GenreName>('chooseGenre');
 
 export const loadFilms = createAction<Films[]>('loadFilms');
 
@@ -26,5 +25,11 @@ export const addReview = createAction<Reviews[]>('addReview');
 export const setError = createAction<string | null>('setError');
 
 export const setFilmsDataLoadingStatus = createAction<boolean>('setFilmsDataLoadingStatus');
+
+export const setPromoFilmLoadingStatus = createAction<boolean>('setPromoFilmLoadingStatus');
+export const setChoosedFilmLoadingStatus = createAction<boolean>('setChoosedFilmLoadingStatus');
+export const setFilmCommentsLoadingStatus = createAction<boolean>('setFilmCommentsLoadingStatus');
+export const setSimilarFilmsLoadingStatus = createAction<boolean>('setSimilarFilmsLoadingStatus');
+export const setFavoriteFilmsLoadingStatus = createAction<boolean>('setFavoriteFilmsLoadingStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');

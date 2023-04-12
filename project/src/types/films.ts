@@ -1,3 +1,5 @@
+import { Reviews } from './reviews';
+
 export type Films = {
   name: string;
   posterImage: string;
@@ -16,4 +18,20 @@ export type Films = {
   isFavorite: boolean;
   videoLink: string;
   previewVideoLink: string;
+}
+
+export interface FilmsState {
+  films: Films[];
+  isLoading: boolean;
+  promoFilm: Films | null;
+  choosedFilm: Films | null;
+  filmComments: Reviews[];
+  similarFilms: Films[];
+  favoriteFilms: Films[];
+  isFilmsDataLoading: boolean;
+  isPromoFilmLoading: boolean;
+  isChoosedFilmLoading: boolean;
+  isFilmCommentsLoading: boolean;
+  isSimilarFilmsLoading: boolean;
+  isFavoriteFilmsLoading: boolean;
 }

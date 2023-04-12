@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { chooseGenre, loadFilms, setFilmsDataLoadingStatus, getFilmById, getSimilarFilms, getFilmComments, addReview, loadPromoFilm, getFavoriteFilms, renderMoreFilms, resetRenderedFilms } from './action';
+import { loadFilms, setFilmsDataLoadingStatus, getFilmById, getSimilarFilms, getFilmComments, addReview, loadPromoFilm, getFavoriteFilms, renderMoreFilms, resetRenderedFilms, setPromoFilmLoadingStatus, setChoosedFilmLoadingStatus, setFilmCommentsLoadingStatus, setSimilarFilmsLoadingStatus, setFavoriteFilmsLoadingStatus } from './action';
 import { Films } from '../types/films';
 import { GenreName, DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY } from '../const';
 import { Reviews } from '../types/reviews';
@@ -14,6 +14,11 @@ type InitialState = {
   similarFilms: Films[];
   favoriteFilms: Films[];
   isFilmsDataLoading: boolean;
+  isPromoFilmLoading: boolean;
+  isChoosedFilmLoading: boolean;
+  isFilmCommentsLoading: boolean;
+  isSimilarFilmsLoading: boolean;
+  isFavoriteFilmsLoading: boolean;
 }
 const initialState: InitialState = {
   activeGenre: GenreName.ALL_GENRES,
@@ -25,14 +30,15 @@ const initialState: InitialState = {
   similarFilms: [],
   favoriteFilms: [],
   isFilmsDataLoading: false,
+  isPromoFilmLoading: false,
+  isChoosedFilmLoading: false,
+  isFilmCommentsLoading: false,
+  isSimilarFilmsLoading: false,
+  isFavoriteFilmsLoading: false,
 };
 //TODO: написать слайсы
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(chooseGenre, (state, action) => {
-      state.renderedFilmsQuantity = DEFAULT_RENDERED_FILMS_QUANTITY;
-      state.activeGenre = action.payload;
-    })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
     })
@@ -61,6 +67,21 @@ const reducer = createReducer(initialState, (builder) => {
       state.filmComments = action.payload;
     })
     .addCase(setFilmsDataLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(setPromoFilmLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(setChoosedFilmLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(setFilmCommentsLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(setSimilarFilmsLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(setFavoriteFilmsLoadingStatus, (state, action) => {
       state.isFilmsDataLoading = action.payload;
     });
 });

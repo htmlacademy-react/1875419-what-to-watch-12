@@ -3,7 +3,7 @@ import axios,{ AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../types/state';
 import {Films} from '../types/films';
-import { loadFilms, setFilmsDataLoadingStatus, getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
+import { loadFilms, getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
@@ -11,33 +11,31 @@ import { Reviews } from '../types/reviews';
 import { NewReview } from '../types/reviews';
 
 
-export const fetchFilmsAction = createAsyncThunk<void, undefined, {
+export const fetchFilmsAction = createAsyncThunk<Films[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'films/fetchFilms',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
     const {data} = await api.get<Films[]>('films');
-    dispatch(setFilmsDataLoadingStatus(false));
     dispatch(loadFilms(data));
+    return data;
   });
 
-export const fetchPromoFilmAction = createAsyncThunk<void, undefined, {
+export const fetchPromoFilmAction = createAsyncThunk<Films, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'films/fetchPromoFilm',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
     const {data} = await api.get<Films>('promo');
-    dispatch(setFilmsDataLoadingStatus(false));
     dispatch(loadPromoFilm(data));
+    return data;
   });
 
-export const fetchChoosedFilmAction = createAsyncThunk<Films | undefined, string, {
+export const fetchChoosedFilmAction = createAsyncThunk<Films | null, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -53,10 +51,11 @@ export const fetchChoosedFilmAction = createAsyncThunk<Films | undefined, string
       if (axios.isAxiosError(error)) {
         toast.error(error.message);
       }
+      throw error;
     }
   });
 
-export const fetchFilmCommentsAction = createAsyncThunk<Reviews[] | undefined, number, {
+export const fetchFilmCommentsAction = createAsyncThunk<Reviews[] , number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -71,10 +70,11 @@ export const fetchFilmCommentsAction = createAsyncThunk<Reviews[] | undefined, n
       if (axios.isAxiosError(error)) {
         toast.error(error.message);
       }
+      throw error;
     }
   });
 
-export const fetchSimilarFilmsAction = createAsyncThunk<Films[] | undefined, string, {
+export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -89,10 +89,11 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films[] | undefined, str
       if (axios.isAxiosError(error)) {
         toast.error(error.message);
       }
+      throw error;
     }
   });
 
-export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
+export const fetchFavoriteFilmsAction = createAsyncThunk<Films[], undefined, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
@@ -102,10 +103,12 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
       try {
         const {data} = await api.get<Films[]>('favorite');
         dispatch(getFavoriteFilms(data));
+        return data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
           toast.error(error.message);
         }
+        throw error;
       }
     });
 
@@ -137,7 +140,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, {extra: api}) => {
     await api.get('login');
   }
 );
