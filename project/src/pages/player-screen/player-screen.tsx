@@ -1,8 +1,9 @@
+import { getChoosedFilm } from '../../store/films-data/films-data.selectors';
 import { useAppSelector } from '../../hooks';
 
 
 function PlayerScreen(): JSX.Element {
-  const filmChoosed = useAppSelector((state) => state.choosedFilm);
+  const filmChoosed = useAppSelector(getChoosedFilm);
   return (
     <div className="player">
       <video src={filmChoosed?.videoLink} className="player__video" poster={filmChoosed?.backgroundImage}></video>

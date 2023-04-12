@@ -13,3 +13,5 @@ export const getFavoriteFilms = (state: State) => state[NameSpace.Films].favorit
 
 export const getFilmComments = (state: State) => state[NameSpace.Films].filmComments;
 
+export const getFilmsDataLoadingStatus = (state: State) => state[NameSpace.Films].isFilmsDataLoading;
+

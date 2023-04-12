@@ -1,4 +1,5 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import { getChoosedFilm } from '../../store/films-data/films-data.selectors';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-header/user-block';
@@ -6,7 +7,7 @@ import { useAppSelector } from '../../hooks';
 
 
 function AddReviewScreen(): JSX.Element {
-  const filmChoosed = useAppSelector((state) => state.choosedFilm);
+  const filmChoosed = useAppSelector(getChoosedFilm);
   return (
     <section className="film-card film-card--full" style={{backgroundColor: filmChoosed?.backgroundColor}}>
       <div className="film-card__header">

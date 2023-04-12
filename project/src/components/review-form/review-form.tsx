@@ -2,13 +2,14 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-actions';
+import { getChoosedFilm } from '../../store/films-data/films-data.selectors';
 import { NewReview } from '../../types/reviews';
 
 const REVIEW_TEXT_MIN_COUNT = 50;
 const REVIEW_TEXT_MAX_COUNT = 400;
 
 function ReviewForm(): JSX.Element {
-  const choosedFilm = useAppSelector((state) => state.choosedFilm);
+  const choosedFilm = useAppSelector(getChoosedFilm);
 
 
   const dispatch = useAppDispatch();

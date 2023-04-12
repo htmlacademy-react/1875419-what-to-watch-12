@@ -1,5 +1,7 @@
 import AddToFavoriteButton from '../film-card-buttons/add-to-favorite-button';
 import { AuthorizationStatus } from '../../const';
+import { getPromoFilm } from '../../store/films-data/films-data.selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import Logo from '../logo/logo';
 import PlayButton from '../film-card-buttons/play-button';
 import UserBlock from '../user-header/user-block';
@@ -8,8 +10,8 @@ import UnauthorizedUserHeader from '../user-header/unauthorized-user-header';
 
 
 function MainFilmCard() : JSX.Element {
-  const promoFilm = useAppSelector((state) => state.promoFilm);
-  const isUserAuthorized = useAppSelector((state) => state.authorizationStatus);
+  const promoFilm = useAppSelector(getPromoFilm);
+  const isUserAuthorized = useAppSelector(getAuthorizationStatus);
   return (
     <section className="film-card">
       <div className="film-card__bg">

@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import { AppRoute } from '../../const';
 import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import MainScreen from '../../pages/main-screen/main-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
@@ -12,7 +13,7 @@ import PrivateRoute from '../private-route/private-route';
 
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <BrowserRouter>

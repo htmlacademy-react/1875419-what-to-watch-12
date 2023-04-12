@@ -9,6 +9,8 @@ import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { getChoosedFilm, getFilmComments, getFilms } from '../../store/films-data/films-data.selectors';
 import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
 import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
@@ -21,14 +23,13 @@ function MoviePageScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isUserAuthorized = useAppSelector((state) => state.authorizationStatus);
+  const isUserAuthorized = useAppSelector(getAuthorizationStatus);
 
-  const choosedFilm = useAppSelector((state) => state.choosedFilm);
-  const films = useAppSelector((state) => state.similarFilms);
-  const reviews = useAppSelector((state) => state.filmComments);
+  const choosedFilm = useAppSelector(getChoosedFilm);
+  const films = useAppSelector(getFilms);
+  const reviews = useAppSelector(getFilmComments);
 
-  const filmsIds = useAppSelector((state) => state.films);
-  const filmsIdsData = Array.from(new Set((filmsIds.map((film) => film.id))));
+  const filmsIdsData = Array.from(new Set((films.map((film) => film.id))));
   const isFilmExist = filmsIdsData.includes(Number(idUrl));
 
   useEffect(() => {
