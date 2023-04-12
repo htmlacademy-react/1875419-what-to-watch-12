@@ -37,7 +37,6 @@ function CatalogLikeThis({films}: FilmsLikeThisProp): JSX.Element {
             id={film.id}
             name={film.name}
             previewImage={film.previewImage}
-            posterImage={film.posterImage}
             previewVideoLink={film.previewVideoLink}
           />
         )
