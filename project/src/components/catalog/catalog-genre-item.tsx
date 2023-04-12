@@ -15,7 +15,7 @@ function CatalogGenreItem({genre}: GenreItemProp): JSX.Element {
   const activeGenre = useAppSelector((state) => state.GENRES.activeGenre);
 
   const changeGenreHandler = () => {
-    dispatch(chooseGenre(genre as GenreName));
+    dispatch(chooseGenre(genre));
   };
   const getGenrePath = (genrePath: string): string => `#${genrePath.toLowerCase()}`;
   return (
@@ -23,7 +23,7 @@ function CatalogGenreItem({genre}: GenreItemProp): JSX.Element {
       'catalog__genres-item',
       {'catalog__genres-item--active': activeGenre === genre})}
     >
-      <Link onClick={changeGenreHandler} to={generatePath(AppRoute.Genre, { genre: getGenrePath(genre) })} className="catalog__genres-link">{genre}</Link>
+      <Link onClick={changeGenreHandler} to={generatePath(AppRoute.Genre, { genre: getGenrePath(genre) })} className="catalog__genres-link">{genre || GenreName.ALL_GENRES}</Link>
     </li>
   );
 }
