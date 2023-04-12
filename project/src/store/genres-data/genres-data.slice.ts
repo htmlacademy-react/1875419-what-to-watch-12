@@ -7,7 +7,7 @@ const initialState: Genres = {
   activeGenre: GenreName.ALL_GENRES,
 };
 
-const genresData = createSlice({
+export const genresData = createSlice({
   name: NameSpace.Genres,
   initialState,
   reducers: {

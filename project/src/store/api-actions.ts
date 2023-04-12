@@ -121,7 +121,7 @@ export const addReviewAction = createAsyncThunk<Reviews[] | undefined, NewReview
     async ({comment, rating}, {dispatch, getState, extra: api}) => {
       try {
         const state = getState();
-        const id = state.choosedFilm?.id;
+        const id = state.FILMS.choosedFilm?.id;
         if (id) {
           const {data} = await api.post<Reviews[]>(`comments/${id}`, {comment, rating});
           dispatch(fetchFilmCommentsAction(id));

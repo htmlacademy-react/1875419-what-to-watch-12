@@ -19,7 +19,7 @@ const initialState: FilmsState = {
   isFavoriteFilmsLoading: false,
 };
 
-const filmsData = createSlice({
+export const filmsData = createSlice({
   name: NameSpace.Films,
   initialState,
   reducers: {},
@@ -90,4 +90,3 @@ const filmsData = createSlice({
   }
 });
 
-export default filmsData.actions;
