@@ -1,24 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
-// import { Films } from '../types/films';
-// import { Reviews } from '../types/reviews';
 
 
 export const renderMoreFilms = createAction('/renderedFilms');
 
 export const resetRenderedFilms = createAction('/renderedFilmsByDefault');
-
-// export const loadPromoFilm = createAction<Films>('loadPromoFilm');
-
-// export const getFilmById = createAction<Films>('getFilmById');
-
-// export const getSimilarFilms = createAction<Films[]>('getSimilarFilms');
-
-// export const getFilmComments = createAction<Reviews[]>('getFilmComments');
-
-// export const getFavoriteFilms = createAction<Films[]>('getFavoriteFilms');
-
-// export const addReview = createAction<Reviews[]>('addReview');
 
 export const setFilmsDataLoadingStatus = createAction<boolean>('setFilmsDataLoadingStatus');
 
