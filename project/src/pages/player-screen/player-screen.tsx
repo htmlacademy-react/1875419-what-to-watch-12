@@ -1,12 +1,18 @@
-import { getChoosedFilm } from '../../store/films-data/films-data.selectors';
+import { getChoosedFilm, getPromoFilm } from '../../store/films-data/films-data.selectors';
 import { useAppSelector } from '../../hooks';
 
 
 function PlayerScreen(): JSX.Element {
-  const filmChoosed = useAppSelector(getChoosedFilm);
+  const filmChoosed = useAppSelector(getChoosedFilm) ;
+  const promoFilm = useAppSelector(getPromoFilm);
   return (
     <div className="player">
-      <video src={filmChoosed?.videoLink} className="player__video" poster={filmChoosed?.backgroundImage}></video>
+      {filmChoosed
+        ?
+        <video src={filmChoosed?.videoLink} className="player__video" poster={filmChoosed?.backgroundImage}></video>
+        :
+        <video src={promoFilm?.videoLink} className="player__video" poster={promoFilm?.backgroundImage}></video>}
+
 
       <button type="button" className="player__exit">Exit</button>
 
