@@ -11,12 +11,12 @@ import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { getChoosedFilm, getChoosedFilmLoadingStatus, getFilmComments, getFilms } from '../../store/films-data/films-data.selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
 import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function MoviePageScreen(): JSX.Element {
@@ -35,7 +35,6 @@ function MoviePageScreen(): JSX.Element {
   const isFilmExist = filmsIdsData.includes(Number(idUrl));
 
   useEffect(() => {
-    //TODO: fix
     if (idUrl && isFilmExist) {
       dispatch(fetchChoosedFilmAction(idUrl));
       dispatch(fetchFilmCommentsAction(Number(idUrl)));

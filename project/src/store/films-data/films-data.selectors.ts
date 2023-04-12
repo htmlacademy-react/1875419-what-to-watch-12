@@ -25,3 +25,5 @@ export const getSimilarFilmsLoadingStatus = (state: State) => state[NameSpace.Fi
 
 export const getFilmCommentsLoadingStatus = (state: State) => state[NameSpace.Films].isFilmCommentsLoading;
 
+export const getFilmsToRenderQuantity = (state: State) => state[NameSpace.Films].renderedFilmsCount;
+

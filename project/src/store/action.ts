@@ -2,10 +2,6 @@ import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 
 
-export const renderMoreFilms = createAction('/renderedFilms');
-
-export const resetRenderedFilms = createAction('/renderedFilmsByDefault');
-
 export const setFilmsDataLoadingStatus = createAction<boolean>('setFilmsDataLoadingStatus');
 
 export const setPromoFilmLoadingStatus = createAction<boolean>('setPromoFilmLoadingStatus');

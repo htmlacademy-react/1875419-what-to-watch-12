@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY, NameSpace } from '../../const';
 import { FilmsState } from '../../types/films';
 import { fetchFilmsAction, fetchChoosedFilmAction, fetchFavoriteFilmsAction, fetchPromoFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../api-actions';
 
@@ -16,12 +16,20 @@ const initialState: FilmsState = {
   isFilmCommentsLoading: false,
   isSimilarFilmsLoading: false,
   isFavoriteFilmsLoading: false,
+  renderedFilmsCount: DEFAULT_RENDERED_FILMS_QUANTITY
 };
 
 export const filmsData = createSlice({
   name: NameSpace.Films,
   initialState,
-  reducers: {},
+  reducers: {
+    renderMoreFilms(state) {
+      state.renderedFilmsCount += FILMS_TO_RENDER_QUANTITY;
+    },
+    resetRenderedFilms(state) {
+      state.renderedFilmsCount = DEFAULT_RENDERED_FILMS_QUANTITY;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFilmsAction.fulfilled,
@@ -35,7 +43,7 @@ export const filmsData = createSlice({
         })
       .addCase(fetchSimilarFilmsAction.fulfilled,
         (state, action) => {
-          state.films = action.payload;
+          state.similarFilms = action.payload;
           state.isSimilarFilmsLoading = false;
         })
       .addCase(fetchSimilarFilmsAction.pending,
@@ -89,3 +97,4 @@ export const filmsData = createSlice({
   }
 });
 
+export const { renderMoreFilms, resetRenderedFilms } = filmsData.actions;

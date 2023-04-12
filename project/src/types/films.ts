@@ -33,4 +33,5 @@ export interface FilmsState {
   isFilmCommentsLoading: boolean;
   isSimilarFilmsLoading: boolean;
   isFavoriteFilmsLoading: boolean;
+  renderedFilmsCount: number;
 }

@@ -1,7 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import { Genres } from '../../types/genres';
-//import { GenreName } from '../../const';
 import { Films } from '../../types/films';
 
 const initialState: Genres = {
@@ -14,8 +13,6 @@ export const genresData = createSlice({
   initialState,
   reducers: {
     chooseGenre(state, action: { payload: string }) {
-      //eslint-disable-next-line
-      console.log(action.payload);
       state.activeGenre = action.payload;
     },
     getFilteredFilms(state, action: { payload: Films[] }) {
