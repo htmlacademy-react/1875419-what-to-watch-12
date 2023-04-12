@@ -22,7 +22,6 @@ export type Films = {
 
 export interface FilmsState {
   films: Films[];
-  isLoading: boolean;
   promoFilm: Films | null;
   choosedFilm: Films | null;
   filmComments: Reviews[];

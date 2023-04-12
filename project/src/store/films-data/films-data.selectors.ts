@@ -15,3 +15,13 @@ export const getFilmComments = (state: State) => state[NameSpace.Films].filmComm
 
 export const getFilmsDataLoadingStatus = (state: State) => state[NameSpace.Films].isFilmsDataLoading;
 
+export const getPromoFilmLoadingStatus = (state: State) => state[NameSpace.Films].isPromoFilmLoading;
+
+export const getChoosedFilmLoadingStatus = (state: State) => state[NameSpace.Films].isChoosedFilmLoading;
+
+export const getFavoriteFilmsLoadingStatus = (state: State) => state[NameSpace.Films].isFavoriteFilmsLoading;
+
+export const getSimilarFilmsLoadingStatus = (state: State) => state[NameSpace.Films].isSimilarFilmsLoading;
+
+export const getFilmCommentsLoadingStatus = (state: State) => state[NameSpace.Films].isFilmCommentsLoading;
+

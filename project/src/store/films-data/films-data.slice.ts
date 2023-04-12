@@ -5,7 +5,6 @@ import { fetchFilmsAction, fetchChoosedFilmAction, fetchFavoriteFilmsAction, fet
 
 const initialState: FilmsState = {
   films: [],
-  isLoading: false,
   promoFilm: null,
   choosedFilm: null,
   filmComments: [],

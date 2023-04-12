@@ -1,3 +1,6 @@
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { getFilmCommentsLoadingStatus } from '../../store/films-data/films-data.selectors';
 import { Reviews } from '../../types/reviews';
 
 const LOCALE = 'en-US';
@@ -8,6 +11,13 @@ type ReviewsProp = {
 
 function FilmTabReviews({reviews}: ReviewsProp): JSX.Element {
   const filmReviews = reviews;
+  const isFilmCommentsLoading = useAppSelector(getFilmCommentsLoadingStatus);
+
+  if (isFilmCommentsLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">

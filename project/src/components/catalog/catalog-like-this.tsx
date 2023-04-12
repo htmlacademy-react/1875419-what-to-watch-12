@@ -1,6 +1,9 @@
 import { Films } from '../../types/films';
 import FilmCard from '../film-card/film-card';
 import useFilmChoosed from '../../hooks/use-film-choosed';
+import { useAppSelector } from '../../hooks';
+import { getSimilarFilmsLoadingStatus } from '../../store/films-data/films-data.selectors';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 const FILMS_COUNT = 4;
 
@@ -14,6 +17,14 @@ function CatalogLikeThis({films}: FilmsLikeThisProp): JSX.Element {
   const theSameFilm = similarFilms.indexOf(filmChoosed as Films);
   if (theSameFilm !== -1){
     similarFilms.splice(theSameFilm, 1);
+  }
+
+  const isSimilarFilmsLoading = useAppSelector(getSimilarFilmsLoadingStatus);
+
+  if(isSimilarFilmsLoading) {
+    return (
+      <LoadingScreen />
+    );
   }
   return (
     <section className="catalog catalog--like-this">

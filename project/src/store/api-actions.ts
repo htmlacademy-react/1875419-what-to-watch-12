@@ -3,7 +3,7 @@ import axios,{ AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../types/state';
 import {Films} from '../types/films';
-import { loadFilms, getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
+//import { getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
@@ -19,7 +19,6 @@ export const fetchFilmsAction = createAsyncThunk<Films[], undefined, {
   'films/fetchFilms',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Films[]>('films');
-    dispatch(loadFilms(data));
     return data;
   });
 
@@ -31,7 +30,7 @@ export const fetchPromoFilmAction = createAsyncThunk<Films, undefined, {
   'films/fetchPromoFilm',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>('promo');
-    dispatch(loadPromoFilm(data));
+    //dispatch(loadPromoFilm(data));
     return data;
   });
 
@@ -45,7 +44,7 @@ export const fetchChoosedFilmAction = createAsyncThunk<Films | null, string, {
 
     try {
       const {data} = await api.get<Films>(`films/${id}`);
-      dispatch(getFilmById(data));
+      //dispatch(getFilmById(data));
       return data;
     } catch(error) {
       if (axios.isAxiosError(error)) {
@@ -64,7 +63,7 @@ export const fetchFilmCommentsAction = createAsyncThunk<Reviews[] , number, {
   async (id, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<Reviews[]>(`comments/${id}`);
-      dispatch(getFilmComments(data));
+      //dispatch(getFilmComments(data));
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -79,11 +78,11 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'films/fetchFilmComments',
+  'films/fetchSimilarFilms',
   async (id, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<Films[]>(`films/${id}/similar`);
-      dispatch(getSimilarFilms(data));
+      //dispatch(getSimilarFilms(data));
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -102,7 +101,7 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<Films[], undefined, {
     async (_arg, {dispatch, extra: api}) => {
       try {
         const {data} = await api.get<Films[]>('favorite');
-        dispatch(getFavoriteFilms(data));
+        //dispatch(getFavoriteFilms(data));
         return data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
