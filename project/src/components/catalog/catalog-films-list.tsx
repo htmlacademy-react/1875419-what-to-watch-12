@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmsToRenderQuantity } from '../../store/films-data/films-data.selectors';
 import { Films } from '../../types/films';
@@ -21,7 +21,7 @@ function CatalogFilmsList({films}: CatalogFilmsListProps): JSX.Element {
   return(
     <>
       <div className="catalog__films-list">
-        {films.slice(0, renderedFilmsQuantity)
+        {useMemo(() => (films.slice(0, renderedFilmsQuantity)
           .map((film) => (
             <FilmCard
               key={film.id}
@@ -31,7 +31,7 @@ function CatalogFilmsList({films}: CatalogFilmsListProps): JSX.Element {
               previewVideoLink={film.previewVideoLink}
             />
           )
-          )}
+          )), [films, renderedFilmsQuantity])}
       </div>
       {renderedFilmsQuantity <= films.length && <CatalogMoreBtn />}
     </>

@@ -1,4 +1,6 @@
+import { useMemo } from 'react';
 import { Films } from '../../types/films';
+
 
 type DetailsProp = {
   film: Films;
@@ -15,12 +17,12 @@ function FilmTabDetails({film}: DetailsProp): JSX.Element {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value" >
-            {film?.starring.map((actor, id) => {
+            {useMemo(() => (film?.starring.map((actor, id) => {
               const keyValue = `${id}-${actor}`;
               return(
                 <span style={{display: 'block'}} key={keyValue}>{actor}</span>
               );
-            })}
+            })), [film])}
           </span>
         </p>
       </div>

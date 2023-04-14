@@ -3,6 +3,7 @@ import { getFavoriteFilms } from '../../store/films-data/films-data.selectors';
 import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
+import { useMemo } from 'react';
 
 
 function MyListScreen(): JSX.Element {
@@ -15,7 +16,7 @@ function MyListScreen(): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          {myFilms.map((film) =>(
+          {useMemo(() => (myFilms.map((film) =>(
             <FilmCard
               key={film.id}
               id={film.id}
@@ -24,7 +25,7 @@ function MyListScreen(): JSX.Element {
               previewVideoLink={film.previewVideoLink}
             />
           )
-          )}
+          )), [myFilms])}
 
         </div>
       </section>
