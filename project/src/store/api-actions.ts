@@ -32,7 +32,7 @@ export const fetchPromoFilmAction = createAsyncThunk<Films, undefined, {
     return data;
   });
 
-export const fetchChoosedFilmAction = createAsyncThunk<Films | null, string, {
+export const fetchChoosedFilmAction = createAsyncThunk<Films | null, number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -69,7 +69,7 @@ export const fetchFilmCommentsAction = createAsyncThunk<Reviews[] , number, {
     }
   });
 
-export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
+export const fetchSimilarFilmsAction = createAsyncThunk<Films[], number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;

@@ -2,6 +2,7 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { getFilmCommentsLoadingStatus } from '../../store/films-data/films-data.selectors';
 import { Reviews } from '../../types/reviews';
+import { formatReviewDate } from '../../utils';
 
 const LOCALE = 'en-US';
 
@@ -23,7 +24,8 @@ function FilmTabReviews({reviews}: ReviewsProp): JSX.Element {
       <div className="film-card__reviews-col">
         {filmReviews.slice(0, Math.ceil(reviews.length / 2)).map((review) => {
           const keyValue = `${review.id}-${review.user.id}`;
-          const date = new Date(review.date);
+          const formatedDate = formatReviewDate(review.date);
+
           return (
             <div className="review" key={keyValue}>
               <blockquote className="review__quote">
@@ -31,7 +33,7 @@ function FilmTabReviews({reviews}: ReviewsProp): JSX.Element {
 
                 <footer className="review__details">
                   <cite className="review__author">{review.user.name}</cite>
-                  <time className="review__date" dateTime={review.date}>{date.toLocaleDateString(LOCALE, {month: 'long', day: 'numeric', year: 'numeric'})}</time>
+                  <time className="review__date" dateTime={formatedDate}>{formatedDate}</time>
                 </footer>
               </blockquote>
 

@@ -27,3 +27,4 @@ export const getFilmCommentsLoadingStatus = (state: State) => state[NameSpace.Fi
 
 export const getFilmsToRenderQuantity = (state: State) => state[NameSpace.Films].renderedFilmsCount;
 
+

@@ -8,6 +8,7 @@ import { useAppSelector } from '../../hooks';
 
 function AddReviewScreen(): JSX.Element {
   const filmChoosed = useAppSelector(getChoosedFilm);
+
   return (
     <section className="film-card film-card--full" style={{backgroundColor: filmChoosed?.backgroundColor}}>
       <div className="film-card__header">

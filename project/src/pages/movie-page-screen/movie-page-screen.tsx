@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 
 function MoviePageScreen(): JSX.Element {
   const {id: idUrl} = useParams();
+  const id = Number(idUrl);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -32,17 +33,17 @@ function MoviePageScreen(): JSX.Element {
   const reviews = useAppSelector(getFilmComments);
 
   const filmsIdsData = Array.from(new Set((films.map((film) => film.id))));
-  const isFilmExist = filmsIdsData.includes(Number(idUrl));
+  const isFilmExist = filmsIdsData.includes(id);
 
   useEffect(() => {
-    if (idUrl && isFilmExist) {
-      dispatch(fetchChoosedFilmAction(idUrl));
-      dispatch(fetchFilmCommentsAction(Number(idUrl)));
-      dispatch(fetchSimilarFilmsAction(idUrl));
+    if (id && isFilmExist) {
+      dispatch(fetchChoosedFilmAction(id));
+      dispatch(fetchFilmCommentsAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
     } else {
       navigate('/*');
     }
-  },[idUrl, isFilmExist, dispatch, navigate]);
+  },[id, isFilmExist, dispatch, navigate]);
 
 
   const [isTabActive, setIsTabActive] = useState({

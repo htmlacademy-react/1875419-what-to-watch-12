@@ -58,3 +58,12 @@ export enum NameSpace {
   Genres = 'GENRES',
   User = 'USER',
 }
+
+export const TimeLeftFormat = {
+  Long: '-HH:mm:ss',
+  Short: '-mm:ss'
+} as const;
+
+export const SECONDS_PER_HOUR = 3600;
+
+export const DATE_FORMAT = 'MMMM D, YYYY';
