@@ -7,10 +7,9 @@ import { fetchChoosedFilmAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { getTimeLeft } from '../../utils';
+import { STEP_BACK } from '../../const';
 
 function PlayerScreen(): JSX.Element {
-  // const filmChoosed = useAppSelector(getChoosedFilm) ;
-  // const promoFilm = useAppSelector(getPromoFilm);
 
   const navigate = useNavigate();
   const { id: filmId } = useParams();
@@ -48,11 +47,11 @@ function PlayerScreen(): JSX.Element {
     return <NotFoundScreen />;
   }
 
-  const handleExitClick = () => navigate(-1);
+  const handleExitClick = () => navigate(STEP_BACK);
 
   const handleChangeIsPausedClick = () =>
     setIsPaused((prevState) => !prevState);
-
+  //TODO: useCallback
   const handleFullScreenClick = () => {
     videoRef.current?.requestFullscreen();
   };

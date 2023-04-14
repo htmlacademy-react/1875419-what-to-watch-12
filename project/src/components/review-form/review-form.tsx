@@ -4,13 +4,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-actions';
 import { getChoosedFilm } from '../../store/films-data/films-data.selectors';
 import { NewReview } from '../../types/reviews';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 
 const REVIEW_TEXT_MIN_COUNT = 50;
 const REVIEW_TEXT_MAX_COUNT = 400;
 
 function ReviewForm(): JSX.Element {
   const choosedFilm = useAppSelector(getChoosedFilm);
-
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function ReviewForm(): JSX.Element {
   });
   const [isDisabled, setDisabled] = useState(true);
 
-
+  //TODO: useCallback
   const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const reviewData: NewReview = {comment: formData['review-text'], rating: formData.rating};
@@ -42,8 +42,13 @@ function ReviewForm(): JSX.Element {
     }
   };
 
-  return(
+  if (!choosedFilm) {
+    return (
+      <NotFoundScreen />
+    );
+  }
 
+  return(
     <form
       action="#"
       className="add-review__form"

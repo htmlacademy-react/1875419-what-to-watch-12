@@ -1,6 +1,7 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import { getChoosedFilm } from '../../store/films-data/films-data.selectors';
 import Logo from '../../components/logo/logo';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppSelector } from '../../hooks';
@@ -9,11 +10,17 @@ import { useAppSelector } from '../../hooks';
 function AddReviewScreen(): JSX.Element {
   const filmChoosed = useAppSelector(getChoosedFilm);
 
+  if (!filmChoosed) {
+    return (
+      <NotFoundScreen />
+    );
+  }
+
   return (
-    <section className="film-card film-card--full" style={{backgroundColor: filmChoosed?.backgroundColor}}>
+    <section className="film-card film-card--full" style={{backgroundColor: filmChoosed.backgroundColor}}>
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={filmChoosed?.backgroundImage} alt={filmChoosed?.name} />
+          <img src={filmChoosed.backgroundImage} alt={filmChoosed.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -25,7 +32,7 @@ function AddReviewScreen(): JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={filmChoosed?.posterImage} alt={filmChoosed?.name} width="218" height="327" />
+          <img src={filmChoosed.posterImage} alt={filmChoosed.name} width="218" height="327" />
         </div>
       </div>
 

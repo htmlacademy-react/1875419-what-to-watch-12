@@ -20,7 +20,6 @@ function CatalogFilms(): JSX.Element {
     );
   }
 
-
   const filmsGenres = ['All genres'];
   const filmsGenresSet = Array.from(new Set(films.map((film) => film.genre)));
   filmsGenresSet.forEach((genre) => filmsGenres.push(genre));

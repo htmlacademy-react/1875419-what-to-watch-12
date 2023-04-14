@@ -63,17 +63,17 @@ function MoviePageScreen(): JSX.Element {
 
   return (
     <>
-      <section className="film-card film-card--full" style={{backgroundColor: choosedFilm?.backgroundColor}}>
+      <section className="film-card film-card--full" style={{backgroundColor: choosedFilm.backgroundColor}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={choosedFilm?.backgroundImage} alt={choosedFilm?.name} />
+            <img src={choosedFilm.backgroundImage} alt={choosedFilm.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
             <Logo />
-            {isUserAuthorized === 'AUTH'
+            {isUserAuthorized === AuthorizationStatus.Auth
               ?
               <UserBlock />
               :
@@ -83,10 +83,10 @@ function MoviePageScreen(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{choosedFilm?.name}</h2>
+              <h2 className="film-card__title">{choosedFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{choosedFilm?.genre}</span>
-                <span className="film-card__year">{choosedFilm?.released}</span>
+                <span className="film-card__genre">{choosedFilm.genre}</span>
+                <span className="film-card__year">{choosedFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -101,7 +101,7 @@ function MoviePageScreen(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={choosedFilm?.posterImage} alt={choosedFilm?.name} width="218" height="327" />
+              <img src={choosedFilm.posterImage} alt={choosedFilm.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">

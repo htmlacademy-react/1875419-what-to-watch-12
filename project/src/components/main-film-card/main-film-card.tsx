@@ -4,6 +4,7 @@ import { getPromoFilm, getPromoFilmLoadingStatus } from '../../store/films-data/
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import Logo from '../logo/logo';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PlayButton from '../film-card-buttons/play-button';
 import UnauthorizedUserHeader from '../user-header/unauthorized-user-header';
 import { useAppSelector } from '../../hooks';
@@ -18,6 +19,12 @@ function MainFilmCard() : JSX.Element {
   if (isPromoFilmLoading) {
     return (
       <LoadingScreen />
+    );
+  }
+
+  if (!promoFilm) {
+    return (
+      <NotFoundScreen />
     );
   }
 
@@ -49,8 +56,8 @@ function MainFilmCard() : JSX.Element {
             </p>
 
             <div className="film-card__buttons">
-              <PlayButton id={promoFilm?.id as number}/>
-              <AddToFavoriteButton filmId={promoFilm?.id as number} />
+              <PlayButton id={promoFilm.id}/>
+              <AddToFavoriteButton filmId={promoFilm.id} />
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ function SignInForm(): JSX.Element {
   const navigate = useNavigate();
 
   const checkValidity = (field: HTMLInputElement, pattern: RegExp) => field.value.match(pattern);
-
+  //TODO: useCallback
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
@@ -43,12 +43,6 @@ function SignInForm(): JSX.Element {
       }
     }
 
-    // if (loginRef.current !== null && passwordRef.current !== null) {
-    //   onSubmit({
-    //     login: loginRef.current.value,
-    //     password: passwordRef.current.value,
-    //   });
-    // }
   };
   return (
     <div className="sign-in user-page__content">

@@ -23,7 +23,7 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
       dispatch(fetchFavoriteFilmsAction());
     }
   }, [isAuthorized, dispatch]);
-
+  //TODO: useCallback
   const handleButtonClick = () => {
     isAuthorized === AuthorizationStatus.Auth
       ? dispatch(postFavoriteFilm({ filmId, status: isFavorite ? 0 : 1 }))

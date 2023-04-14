@@ -78,3 +78,5 @@ export const ValidationPattern = {
   Email: /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/,
   Password: /([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])/,
 } as const;
+
+export const STEP_BACK = -1;

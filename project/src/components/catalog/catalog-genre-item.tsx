@@ -13,7 +13,7 @@ function CatalogGenreItem({genre}: GenreItemProp): JSX.Element {
 
   const dispatch = useAppDispatch();
   const activeGenre = useAppSelector((state) => state.GENRES.activeGenre);
-
+  //TODO: useCallback
   const changeGenreHandler = () => {
     dispatch(chooseGenre(genre));
   };
