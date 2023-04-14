@@ -1,32 +1,54 @@
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
-import {loginAction} from '../../store/api-actions';
+import {AppRoute, SignInError, ValidationPattern} from '../../const';
 import {AuthData} from '../../types/auth-data';
-import {AppRoute} from '../../const';
+import {loginAction} from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks';
 
 
 function SignInForm(): JSX.Element {
+  const [invalidFields, setInvalidFields] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const checkValidity = (field: HTMLInputElement, pattern: RegExp) => field.value.match(pattern);
+
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
-    navigate(AppRoute.Main);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
+    if (loginRef.current && passwordRef.current) {
+      const isEmailValid = checkValidity(loginRef.current, ValidationPattern.Email);
+      const isPasswordValid = checkValidity(passwordRef.current, ValidationPattern.Password);
+
+      if (isEmailValid && isPasswordValid) {
+        onSubmit({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        });
+        setInvalidFields(false);
+        setErrorMessage('');
+        navigate(AppRoute.Main);
+      } else {
+        setInvalidFields(true);
+        const error = !isEmailValid ? SignInError.InvalidEmail : SignInError.InvalidPassword;
+        setErrorMessage(error);
+      }
     }
+
+    // if (loginRef.current !== null && passwordRef.current !== null) {
+    //   onSubmit({
+    //     login: loginRef.current.value,
+    //     password: passwordRef.current.value,
+    //   });
+    // }
   };
   return (
     <div className="sign-in user-page__content">
@@ -35,6 +57,10 @@ function SignInForm(): JSX.Element {
         className="sign-in__form"
         onSubmit={handleSubmit}
       >
+        {invalidFields &&
+        <div className='sign-in__message'>
+          <p>{errorMessage}</p>
+        </div>}
         <div className="sign-in__fields">
           <div className="sign-in__field">
             <input
