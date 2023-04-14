@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
@@ -9,4 +10,4 @@ function UnauthorizedUserHeader(): JSX.Element {
   );
 }
 
-export default UnauthorizedUserHeader;
+export default memo(UnauthorizedUserHeader);

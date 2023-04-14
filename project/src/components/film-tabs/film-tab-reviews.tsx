@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { getFilmCommentsLoadingStatus } from '../../store/films-data/films-data.selectors';
@@ -65,4 +66,4 @@ function FilmTabReviews({reviews}: ReviewsProp): JSX.Element {
   );
 }
 
-export default FilmTabReviews;
+export default memo(FilmTabReviews);

@@ -19,19 +19,19 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
   const isFavorite = useAppSelector(getIsFilmFavorite(filmId));
 
   useEffect(() => {
-    if (isAuthorized) {
+    if (isAuthorized === 'AUTH') {
       dispatch(fetchFavoriteFilmsAction());
     }
   }, [isAuthorized, dispatch]);
 
   const handleButtonClick = () => {
-    isAuthorized
+    isAuthorized === 'AUTH'
       ? dispatch(postFavoriteFilm({ filmId, status: isFavorite ? 0 : 1 }))
       : navigate(AppRoute.SignIn);
   };
   return (
     <button className="btn btn--list film-card__button" type="button" onClick={handleButtonClick}>
-      {isAuthorized && isFavorite ? (
+      {isAuthorized === 'AUTH' && isFavorite ? (
         <svg viewBox="0 0 18 14" width="18" height="14">
           <use xlinkHref="#in-list"></use>
         </svg>
@@ -42,7 +42,7 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
           </svg>
         )}
       <span>My list</span>
-      <span className="film-card__count">{isAuthorized ? filmsAmount : 0}</span>
+      <span className="film-card__count">{isAuthorized === 'AUTH' ? filmsAmount : 0}</span>
     </button>
   );
 }

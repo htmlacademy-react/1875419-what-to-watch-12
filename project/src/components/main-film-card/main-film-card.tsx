@@ -3,11 +3,11 @@ import { AuthorizationStatus } from '../../const';
 import { getPromoFilm, getPromoFilmLoadingStatus } from '../../store/films-data/films-data.selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import Logo from '../logo/logo';
-import PlayButton from '../film-card-buttons/play-button';
-import UserBlock from '../user-header/user-block';
-import { useAppSelector } from '../../hooks';
-import UnauthorizedUserHeader from '../user-header/unauthorized-user-header';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import PlayButton from '../film-card-buttons/play-button';
+import UnauthorizedUserHeader from '../user-header/unauthorized-user-header';
+import { useAppSelector } from '../../hooks';
+import UserBlock from '../user-header/user-block';
 
 
 function MainFilmCard() : JSX.Element {

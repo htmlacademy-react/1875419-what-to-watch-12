@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Films } from '../../types/films';
 
 
@@ -45,4 +45,4 @@ function FilmTabDetails({film}: DetailsProp): JSX.Element {
   );
 }
 
-export default FilmTabDetails;
+export default memo(FilmTabDetails);
