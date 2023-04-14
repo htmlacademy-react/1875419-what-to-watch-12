@@ -50,7 +50,7 @@ function MainFilmCard() : JSX.Element {
 
             <div className="film-card__buttons">
               <PlayButton id={promoFilm?.id as number}/>
-              <AddToFavoriteButton />
+              <AddToFavoriteButton filmId={promoFilm?.id as number} />
             </div>
           </div>
         </div>

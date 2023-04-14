@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY, NameSpace } from '../../const';
 import { FilmsState } from '../../types/films';
-import { fetchFilmsAction, fetchChoosedFilmAction, fetchFavoriteFilmsAction, fetchPromoFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../api-actions';
+import { fetchFilmsAction, fetchChoosedFilmAction, fetchFavoriteFilmsAction, fetchPromoFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction, postFavoriteFilm } from '../api-actions';
 
 const initialState: FilmsState = {
   films: [],
@@ -93,7 +93,17 @@ export const filmsData = createSlice({
         (state, action) => {
           state.favoriteFilms = action.payload;
           state.isFilmCommentsLoading = false;
-        });
+        })
+      .addCase(postFavoriteFilm.fulfilled,
+        (state, action) => {
+          const film = action.payload;
+          if (film){
+            if(film.isFavorite) {
+              state.films = state.films.concat(film);
+            } else {
+              state.films = state.films.filter((item)=> item.id !== film.id);
+            }
+          }});
   }
 });
 

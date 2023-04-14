@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {State} from '../../types/state';
 
@@ -26,5 +27,12 @@ export const getSimilarFilmsLoadingStatus = (state: State) => state[NameSpace.Fi
 export const getFilmCommentsLoadingStatus = (state: State) => state[NameSpace.Films].isFilmCommentsLoading;
 
 export const getFilmsToRenderQuantity = (state: State) => state[NameSpace.Films].renderedFilmsCount;
+
+export const getFavoriteFilmsAmount = (state: State): number => state[NameSpace.Films].favoriteFilms.length;
+
+export const getIsFilmFavorite = (filmId:number) => createSelector(
+  getFavoriteFilms,
+  (films):boolean=> films.some((film)=> film.id === filmId)
+);
 
 

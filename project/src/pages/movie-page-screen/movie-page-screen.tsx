@@ -88,7 +88,7 @@ function MoviePageScreen(): JSX.Element {
 
               <div className="film-card__buttons">
                 <PlayButton id={choosedFilm?.id as number}/>
-                <AddToFavoriteButton />
+                <AddToFavoriteButton filmId={id}/>
                 {(isUserAuthorized === 'AUTH') && <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
