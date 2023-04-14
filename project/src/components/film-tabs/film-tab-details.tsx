@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import { Films } from '../../types/films';
 
 
@@ -20,7 +20,9 @@ function FilmTabDetails({film}: DetailsProp): JSX.Element {
             {useMemo(() => (film?.starring.map((actor, id) => {
               const keyValue = `${id}-${actor}`;
               return(
-                <span style={{display: 'block'}} key={keyValue}>{actor}</span>
+                <Fragment key={keyValue}>
+                  {actor} <br />
+                </Fragment>
               );
             })), [film])}
           </span>

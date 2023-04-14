@@ -7,6 +7,7 @@ const initialState: FilmsState = {
   films: [],
   promoFilm: null,
   choosedFilm: null,
+  choosedFilmError: false,
   filmComments: [],
   similarFilms: [],
   favoriteFilms: [],
@@ -67,14 +68,17 @@ export const filmsData = createSlice({
         (state, action) => {
           state.choosedFilm = action.payload;
           state.isChoosedFilmLoading = false;
+          state.choosedFilmError = false;
         })
       .addCase(fetchChoosedFilmAction.pending,
         (state) => {
           state.isChoosedFilmLoading = true;
+          state.choosedFilmError = false;
         })
       .addCase(fetchChoosedFilmAction.rejected,
         (state) => {
           state.isChoosedFilmLoading = false;
+          state.choosedFilmError = true;
         })
       .addCase(fetchFilmCommentsAction.fulfilled,
         (state, action) => {

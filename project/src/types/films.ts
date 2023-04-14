@@ -20,10 +20,11 @@ export type Films = {
   previewVideoLink: string;
 }
 
-export interface FilmsState {
+export type FilmsState = {
   films: Films[];
   promoFilm: Films | null;
   choosedFilm: Films | null;
+  choosedFilmError: boolean;
   filmComments: Reviews[];
   similarFilms: Films[];
   favoriteFilms: Films[];

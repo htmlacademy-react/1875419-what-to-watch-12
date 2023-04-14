@@ -10,6 +10,8 @@ export const getSimilarFilms = (state: State) => state[NameSpace.Films].similarF
 
 export const getChoosedFilm = (state: State) => state[NameSpace.Films].choosedFilm;
 
+export const getChoosedFilmError = (state: State) => state[NameSpace.Films].choosedFilmError;
+
 export const getFavoriteFilms = (state: State) => state[NameSpace.Films].favoriteFilms;
 
 export const getFilmComments = (state: State) => state[NameSpace.Films].filmComments;

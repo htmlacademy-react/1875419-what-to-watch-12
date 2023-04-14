@@ -1,49 +1,46 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
+import { AuthorizationStatus } from '../../const';
 import CatalogLikeThis from '../../components/catalog/catalog-like-this';
 import { fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
-import { Films } from '../../types/films';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
-import { getChoosedFilm, getChoosedFilmLoadingStatus, getFilmComments, getFilms } from '../../store/films-data/films-data.selectors';
+import { getChoosedFilm, getChoosedFilmError, getChoosedFilmLoadingStatus, getFilmComments, getSimilarFilmsLoadingStatus } from '../../store/films-data/films-data.selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
 import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 
 function MoviePageScreen(): JSX.Element {
   const {id: idUrl} = useParams();
   const id = Number(idUrl);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const isUserAuthorized = useAppSelector(getAuthorizationStatus);
   const isChoosedFilmLoading = useAppSelector(getChoosedFilmLoadingStatus);
+  const isSimilarFilmsLoading = useAppSelector(getSimilarFilmsLoadingStatus);
+  const choosedFilmError = useAppSelector(getChoosedFilmError);
 
   const choosedFilm = useAppSelector(getChoosedFilm);
-  const films = useAppSelector(getFilms);
   const reviews = useAppSelector(getFilmComments);
 
-  const filmsIdsData = Array.from(new Set((films.map((film) => film.id))));
-  const isFilmExist = filmsIdsData.includes(id);
 
   useEffect(() => {
-    if (id && isFilmExist) {
+    if (id) {
       dispatch(fetchChoosedFilmAction(id));
       dispatch(fetchFilmCommentsAction(id));
       dispatch(fetchSimilarFilmsAction(id));
-    } else {
-      navigate('/*');
     }
-  },[id, isFilmExist, dispatch, navigate]);
+  },[id, dispatch]);
 
 
   const [isTabActive, setIsTabActive] = useState({
@@ -52,9 +49,15 @@ function MoviePageScreen(): JSX.Element {
     isReviewsActive: false
   });
 
-  if (isChoosedFilmLoading) {
+  if (isChoosedFilmLoading || isSimilarFilmsLoading) {
     return (
       <LoadingScreen />
+    );
+  }
+
+  if (!id || !choosedFilm || choosedFilmError){
+    return (
+      <NotFoundScreen />
     );
   }
 
@@ -87,9 +90,9 @@ function MoviePageScreen(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <PlayButton id={choosedFilm?.id as number}/>
+                <PlayButton id={choosedFilm.id}/>
                 <AddToFavoriteButton filmId={id}/>
-                {(isUserAuthorized === 'AUTH') && <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>}
+                {(isUserAuthorized === AuthorizationStatus.Auth) && <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -145,8 +148,8 @@ function MoviePageScreen(): JSX.Element {
                   </li>
                 </ul>
               </nav>
-              { isTabActive.isOverviewActive && <FilmTabOverview film={choosedFilm as Films} />}
-              { isTabActive.isDetailsActive && <FilmTabDetails film={choosedFilm as Films} />}
+              { isTabActive.isOverviewActive && <FilmTabOverview film={choosedFilm} />}
+              { isTabActive.isDetailsActive && <FilmTabDetails film={choosedFilm} />}
               { isTabActive.isReviewsActive && <FilmTabReviews reviews={reviews}/>}
             </div>
           </div>

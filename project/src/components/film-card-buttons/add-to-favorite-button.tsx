@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavoriteFilmsAmount, getIsFilmFavorite } from '../../store/films-data/films-data.selectors';
-import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { fetchFavoriteFilmsAction, postFavoriteFilm } from '../../store/api-actions';
-import { AppRoute } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { getFavoriteFilmsAmount, getIsFilmFavorite } from '../../store/films-data/films-data.selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 
 type FavoriteButtonProps = {
@@ -19,16 +19,20 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
   const isFavorite = useAppSelector(getIsFilmFavorite(filmId));
 
   useEffect(() => {
-    if (isAuthorized === 'AUTH') {
+    if (isAuthorized === AuthorizationStatus.Auth) {
       dispatch(fetchFavoriteFilmsAction());
     }
   }, [isAuthorized, dispatch]);
 
   const handleButtonClick = () => {
-    isAuthorized === 'AUTH'
+    isAuthorized === AuthorizationStatus.Auth
       ? dispatch(postFavoriteFilm({ filmId, status: isFavorite ? 0 : 1 }))
       : navigate(AppRoute.SignIn);
   };
+  //TODO: рендерить компонент при клике на кнопку???
+  // useEffect(() => {
+
+  // });
   return (
     <button className="btn btn--list film-card__button" type="button" onClick={handleButtonClick}>
       {isAuthorized === 'AUTH' && isFavorite ? (
@@ -42,7 +46,7 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
           </svg>
         )}
       <span>My list</span>
-      <span className="film-card__count">{isAuthorized === 'AUTH' ? filmsAmount : 0}</span>
+      <span className="film-card__count">{isAuthorized === AuthorizationStatus.Auth ? filmsAmount : 0}</span>
     </button>
   );
 }
