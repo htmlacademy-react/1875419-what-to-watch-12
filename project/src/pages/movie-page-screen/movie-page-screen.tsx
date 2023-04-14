@@ -154,7 +154,7 @@ function MoviePageScreen(): JSX.Element {
       </section>
 
       <div className="page-content">
-        <CatalogLikeThis films={films}/>
+        <CatalogLikeThis />
         <Footer />
       </div>
     </>

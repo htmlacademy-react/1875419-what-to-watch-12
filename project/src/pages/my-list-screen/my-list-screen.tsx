@@ -1,9 +1,9 @@
+import { useMemo } from 'react';
 import AuthorizedUserHeader from '../../components/user-header/authorized-user-header';
 import { getFavoriteFilms } from '../../store/films-data/films-data.selectors';
 import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
-import { useMemo } from 'react';
 
 
 function MyListScreen(): JSX.Element {
