@@ -4,6 +4,7 @@ import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { chooseGenre } from '../../store/genres-data/genres-data.slice';
 import { GenreName } from '../../const';
+import { memo } from 'react';
 
 type GenreItemProp = {
   genre: string;
@@ -28,4 +29,4 @@ function CatalogGenreItem({genre}: GenreItemProp): JSX.Element {
   );
 }
 
-export default CatalogGenreItem;
+export default memo(CatalogGenreItem);

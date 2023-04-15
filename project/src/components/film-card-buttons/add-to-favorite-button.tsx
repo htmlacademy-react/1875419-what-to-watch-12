@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { fetchFavoriteFilmsAction, postFavoriteFilm } from '../../store/api-actions';
@@ -15,27 +15,27 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const filmsAmount = useAppSelector(getFavoriteFilmsAmount);
-  const isAuthorized = useAppSelector(getAuthorizationStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
   const isFavorite = useAppSelector(getIsFilmFavorite(filmId));
+  const [refreshPage, setRefreshPage] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isAuthorized === AuthorizationStatus.Auth) {
+    if (authStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoriteFilmsAction());
     }
-  }, [isAuthorized, dispatch]);
+  }, [authStatus, dispatch, refreshPage]);
+
   //TODO: useCallback
   const handleButtonClick = () => {
-    isAuthorized === AuthorizationStatus.Auth
+    authStatus === AuthorizationStatus.Auth
       ? dispatch(postFavoriteFilm({ filmId, status: isFavorite ? 0 : 1 }))
       : navigate(AppRoute.SignIn);
+    setRefreshPage(!refreshPage);
   };
-  //TODO: рендерить компонент при клике на кнопку???
-  // useEffect(() => {
 
-  // });
   return (
     <button className="btn btn--list film-card__button" type="button" onClick={handleButtonClick}>
-      {isAuthorized === 'AUTH' && isFavorite ? (
+      {authStatus === 'AUTH' && isFavorite ? (
         <svg viewBox="0 0 18 14" width="18" height="14">
           <use xlinkHref="#in-list"></use>
         </svg>
@@ -46,7 +46,7 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
           </svg>
         )}
       <span>My list</span>
-      <span className="film-card__count">{isAuthorized === AuthorizationStatus.Auth ? filmsAmount : 0}</span>
+      <span className="film-card__count">{authStatus === AuthorizationStatus.Auth ? filmsAmount : 0}</span>
     </button>
   );
 }
