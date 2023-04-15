@@ -16,7 +16,6 @@ function SignInForm(): JSX.Element {
   const navigate = useNavigate();
 
   const checkValidity = (field: HTMLInputElement, pattern: RegExp) => field.value.match(pattern);
-  //TODO: useCallback
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };

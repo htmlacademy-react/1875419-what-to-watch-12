@@ -21,7 +21,6 @@ function ReviewForm(): JSX.Element {
   });
   const [isDisabled, setDisabled] = useState(true);
 
-  //TODO: useCallback
   const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const reviewData: NewReview = {comment: formData['review-text'], rating: formData.rating};

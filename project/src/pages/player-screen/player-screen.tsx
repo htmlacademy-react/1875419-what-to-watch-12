@@ -51,7 +51,6 @@ function PlayerScreen(): JSX.Element {
 
   const handleChangeIsPausedClick = () =>
     setIsPaused((prevState) => !prevState);
-  //TODO: useCallback
   const handleFullScreenClick = () => {
     videoRef.current?.requestFullscreen();
   };
