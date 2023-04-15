@@ -4,7 +4,7 @@ import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
 import { AuthorizationStatus } from '../../const';
 import CatalogLikeThis from '../../components/catalog/catalog-like-this';
-import { fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { checkAuthAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
@@ -39,6 +39,7 @@ function MoviePageScreen(): JSX.Element {
       dispatch(fetchChoosedFilmAction(id));
       dispatch(fetchFilmCommentsAction(id));
       dispatch(fetchSimilarFilmsAction(id));
+      dispatch(checkAuthAction());
     }
   },[id, dispatch]);
 
