@@ -7,7 +7,8 @@ export enum AppRoute {
   FilmReviews = '/films/:id/reviews',
   FilmDetails = '/films/:id/details',
   AddReview = '/films/:id/review',
-  Player = '/player/:id'
+  Player = '/player/:id',
+  Error = '/*'
 }
 
 export enum AuthorizationStatus {
@@ -50,7 +51,32 @@ export enum GenreName {
   ALL_GENRES = 'All genres',
 }
 
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export const DEFAULT_RENDERED_FILMS_QUANTITY = 8;
 export const FILMS_TO_RENDER_QUANTITY = 8;
+
+export enum NameSpace {
+  Films = 'FILMS',
+  Genres = 'GENRES',
+  User = 'USER',
+}
+
+export const TimeLeftFormat = {
+  Long: '-HH:mm:ss',
+  Short: '-mm:ss'
+} as const;
+
+export const SECONDS_PER_HOUR = 3600;
+
+export const DATE_FORMAT = 'MMMM D, YYYY';
+
+export const SignInError = {
+  InvalidEmail: 'Please enter a valid email address.',
+  InvalidPassword: 'Please use at least one number and one letter in your password',
+} as const;
+
+export const ValidationPattern = {
+  Email: /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/,
+  Password: /([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])/,
+} as const;
+
+export const STEP_BACK = -1;

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Films } from '../../types/films';
 import { FilmRating } from '../../const';
 
@@ -26,4 +27,4 @@ function FilmTabOverview({film}: OverviewProp): JSX.Element {
   );
 }
 
-export default FilmTabOverview;
+export default memo(FilmTabOverview);

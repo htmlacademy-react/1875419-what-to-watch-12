@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks';
-import { renderMoreFilms } from '../../store/action';
+import { renderMoreFilms } from '../../store/films-data/films-data.slice';
 
 
 function CatalogMoreBtn(): JSX.Element {

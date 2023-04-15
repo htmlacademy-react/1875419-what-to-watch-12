@@ -1,3 +1,9 @@
-const Spinner = () => <div className="loader" style = {{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}></div>;
+import { memo } from 'react';
 
-export default Spinner;
+function Spinner(): JSX.Element {
+  return (
+    <div className="loader" style = {{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}></div>
+  );
+}
+
+export default memo(Spinner);

@@ -1,31 +1,24 @@
-import { useEffect } from 'react';
 import CatalogGenresList from './catalog-genres-list';
-import CatalogMoreBtn from './catalog-more-btn';
-import { GenreName } from '../../const';
-import FilmCard from '../film-card/film-card';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getGenre } from '../../store/genres-data/genres-data.selectors';
+import { getFilms, getFilmsDataLoadingStatus } from '../../store/films-data/films-data.selectors';
+import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { resetRenderedFilms } from '../../store/action';
+import useGetFilteredFilms from '../../hooks/use-get-filtered-films';
+import CatalogFilmsList from './catalog-films-list';
+import { GenreName } from '../../const';
 
 
 function CatalogFilms(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const activeGenre = useAppSelector((state) => state.activeGenre);
-  const films = useAppSelector((state) => state.films);
-  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
-  const renderedFilmsQuantity = useAppSelector((state) => state.renderedFilmsQuantity);
-
-  useEffect(() => () => {
-    dispatch(resetRenderedFilms());
-  }, [dispatch]);
-
+  const activeGenre = useAppSelector(getGenre);
+  const films = useAppSelector(getFilms);
+  const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
+  const filteredFilms = useGetFilteredFilms(films, activeGenre);
 
   if (isFilmsDataLoading) {
     return (
       <LoadingScreen />
     );
   }
-
 
   const filmsGenres = ['All genres'];
   const filmsGenresSet = Array.from(new Set(films.map((film) => film.genre)));
@@ -36,29 +29,12 @@ function CatalogFilms(): JSX.Element {
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
       <CatalogGenresList filmsGenres={filmsGenres} />
-      <div className="catalog__films-list">
-        {films.slice(0, renderedFilmsQuantity)
-          .filter((film) => {
-            if (activeGenre === GenreName.ALL_GENRES) {
-              return true;
-            }
-            return film.genre === activeGenre;
-          })
-          .map((film) => (
-            <FilmCard
-              key={film.id}
-              id={film.id}
-              name={film.name}
-              previewImage={film.previewImage}
-              posterImage={film.posterImage}
-              previewVideoLink={film.previewVideoLink}
-            />
-          )
-          )}
-      </div>
-      {/* TODO: доработать функциональность кнопки. при переключении фильтров - фигня*/}
-      {renderedFilmsQuantity >= films.length ? null :
-        <CatalogMoreBtn />}
+      {activeGenre === GenreName.ALL_GENRES
+        ?
+        <CatalogFilmsList films={films} />
+        :
+        <CatalogFilmsList films={filteredFilms} />}
+
     </section>
   );
 }

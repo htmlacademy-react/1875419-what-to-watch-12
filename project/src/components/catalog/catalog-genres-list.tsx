@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import CatalogGenreItem from './catalog-genre-item';
 
 type GenresProp = {
@@ -5,15 +6,14 @@ type GenresProp = {
 }
 
 function CatalogGenresList({filmsGenres}: GenresProp): JSX.Element {
-
   return (
     <>
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
       <ul className="catalog__genres-list">
-        {filmsGenres.map((genre) => (
-          <CatalogGenreItem genre={genre} key={genre}/>
-        ))}
+        {useMemo(() => filmsGenres.map((genre) => (
+          <CatalogGenreItem genre={genre} key={genre} />
+        )), [filmsGenres])}
       </ul>
     </>
   );

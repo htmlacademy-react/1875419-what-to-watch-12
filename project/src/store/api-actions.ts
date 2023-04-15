@@ -1,10 +1,8 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AxiosInstance} from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios,{ AxiosInstance } from 'axios';
+import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../types/state';
 import {Films} from '../types/films';
-import { loadFilms, setError, setFilmsDataLoadingStatus, requireAuthorization, getFavoriteFilms, getFilmById, getFilmComments, getSimilarFilms, loadPromoFilm } from './action';
-import {store} from './';
-import { AuthorizationStatus ,TIMEOUT_SHOW_ERROR } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
@@ -12,110 +10,141 @@ import { Reviews } from '../types/reviews';
 import { NewReview } from '../types/reviews';
 
 
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
-
-export const fetchFilmsAction = createAsyncThunk<void, undefined, {
+export const fetchFilmsAction = createAsyncThunk<Films[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'films/fetchFilms',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
+  async (_arg, { extra: api}) => {
     const {data} = await api.get<Films[]>('films');
-    dispatch(setFilmsDataLoadingStatus(false));
-    dispatch(loadFilms(data));
+    return data;
   });
 
-export const fetchPromoFilmAction = createAsyncThunk<void, undefined, {
+export const fetchPromoFilmAction = createAsyncThunk<Films, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'films/fetchPromoFilm',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
+  async (_arg, { extra: api}) => {
     const {data} = await api.get<Films>('promo');
-    dispatch(setFilmsDataLoadingStatus(false));
-    dispatch(loadPromoFilm(data));
+    return data;
   });
 
-export const fetchChoosedFilmAction = createAsyncThunk<Films, string, {
+export const fetchChoosedFilmAction = createAsyncThunk<Films | null, number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'films/fetchChoosedFilm',
-  async (id, {dispatch, extra: api}) => {
+  async (id, { extra: api}) => {
 
     try {
       const {data} = await api.get<Films>(`films/${id}`);
-      dispatch(getFilmById(data));
       return data;
-    } catch {
-      //TODO: обработка всех ошибок в запросах
-      throw Error;
+    } catch(error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.message);
+      }
+      throw error;
     }
   });
 
-export const fetchFilmCommentsAction = createAsyncThunk<Reviews[], string, {
+export const fetchFilmCommentsAction = createAsyncThunk<Reviews[] , number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'films/fetchFilmComments',
-  async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Reviews[]>(`comments/${id}`);
-    dispatch(getFilmComments(data));
-    return data;
+  async (id, { extra: api}) => {
+    try {
+      const {data} = await api.get<Reviews[]>(`comments/${id}`);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.message);
+      }
+      throw error;
+    }
   });
 
-export const fetchSimilarFilmsAction = createAsyncThunk<Films[], string, {
+export const fetchSimilarFilmsAction = createAsyncThunk<Films[], number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'films/fetchFilmComments',
-  // TODO: обработка ошибок
-  async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Films[]>(`films/${id}/similar`);
-    dispatch(getSimilarFilms(data));
-    return data;
+  'films/fetchSimilarFilms',
+  async (id, { extra: api}) => {
+    try {
+      const {data} = await api.get<Films[]>(`films/${id}/similar`);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.message);
+      }
+      throw error;
+    }
   });
 
-export const fetchFavoriteFilmsAction = createAsyncThunk<void, undefined, {
+export const fetchFavoriteFilmsAction = createAsyncThunk<Films[], undefined, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }>(
     'user/fetchFavoriteFilms',
-    // TODO: обработка ошибок
-    async (_arg, {dispatch, extra: api}) => {
-      const {data} = await api.get<Films[]>('favorite');
-      dispatch(getFavoriteFilms(data));
+    async (_arg, { extra: api}) => {
+      try {
+        const {data} = await api.get<Films[]>('favorite');
+        return data;
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          toast.error(error.message);
+        }
+        throw error;
+      }
     });
 
-export const addReviewAction = createAsyncThunk<Reviews[], NewReview, {
+export const postFavoriteFilm = createAsyncThunk<Films | void, {
+      filmId: number;
+      status: number;
+    }, {
+      dispatch: AppDispatch;
+      state: State;
+      extra: AxiosInstance;
+    }>(
+      'user/postFavoriteFilm',
+      async ({filmId, status}, {extra: api}) => {
+        try {
+          const {data} = await api.post<Films>(`favorite/${filmId}/${status}`);
+          return data;
+        } catch (error) {
+          if (axios.isAxiosError(error)) {
+            toast.error(error.message);
+          }
+          throw error;
+        }
+      });
+
+export const addReviewAction = createAsyncThunk<Reviews[] | undefined, NewReview, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }>(
     'films/review',
-    // TODO: обработка ошибок
     async ({comment, rating}, {dispatch, getState, extra: api}) => {
-      const state = getState();
-      const id = state.choosedFilm?.id;
-      const {data} = await api.post<Reviews[]>(`comments/${id as number}`, {comment, rating});
-      dispatch(getFilmComments);
-      return data;
+      try {
+        const state = getState();
+        const id = state.FILMS.choosedFilm?.id;
+        if (id) {
+          const {data} = await api.post<Reviews[]>(`comments/${id}`, {comment, rating});
+          dispatch(fetchFilmCommentsAction(id));
+          return data;}
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          toast.error(error.message);
+        }
+      }
     },
   );
 
@@ -125,14 +154,9 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
-    try {
-      await api.get('login');
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
-  },
+  async (_arg, {extra: api}) => {
+    await api.get('login');
+  }
 );
 
 export const loginAction = createAsyncThunk<void, AuthData, {
@@ -141,10 +165,15 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>('login', {email, password});
-    saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+  async ({login: email, password}, { extra: api}) => {
+    try {
+      const {data: {token}} = await api.post<UserData>('login', {email, password});
+      saveToken(token);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.message);
+      }
+    }
   },
 );
 
@@ -154,10 +183,15 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/logout',
-  async (_arg, {dispatch, extra: api}) => {
-    await api.delete('logout');
-    dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  async (_arg, { extra: api}) => {
+    try {
+      await api.delete('logout');
+      dropToken();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.message);
+      }
+    }
   },
 );
 

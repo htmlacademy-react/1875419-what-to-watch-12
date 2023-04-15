@@ -1,45 +1,47 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
+import { AuthorizationStatus } from '../../const';
 import CatalogLikeThis from '../../components/catalog/catalog-like-this';
-import { fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { checkAuthAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';
 import FilmTabOverview from '../../components/film-tabs/film-tab-overview';
 import FilmTabReviews from '../../components/film-tabs/film-tab-reviews';
 import Footer from '../../components/footer/footer';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { getChoosedFilm, getChoosedFilmError, getChoosedFilmLoadingStatus, getFilmComments, getSimilarFilmsLoadingStatus } from '../../store/films-data/films-data.selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
+import Logo from '../../components/logo/logo';
 import PlayButton from '../../components/film-card-buttons/play-button';
 import UnauthorizedUserHeader from '../../components/user-header/unauthorized-user-header';
 import UserBlock from '../../components/user-header/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Films } from '../../types/films';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 
 function MoviePageScreen(): JSX.Element {
   const {id: idUrl} = useParams();
+  const id = Number(idUrl);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  const isUserAuthorized = useAppSelector((state) => state.authorizationStatus);
+  const isUserAuthorized = useAppSelector(getAuthorizationStatus);
+  const isChoosedFilmLoading = useAppSelector(getChoosedFilmLoadingStatus);
+  const isSimilarFilmsLoading = useAppSelector(getSimilarFilmsLoadingStatus);
+  const choosedFilmError = useAppSelector(getChoosedFilmError);
 
-  const choosedFilm = useAppSelector((state) => state.choosedFilm);
-  const films = useAppSelector((state) => state.similarFilms);
-  const reviews = useAppSelector((state) => state.filmComments);
+  const choosedFilm = useAppSelector(getChoosedFilm);
+  const reviews = useAppSelector(getFilmComments);
 
-  const filmsIds = useAppSelector((state) => state.films);
-  const filmsIdsData = Array.from(new Set((filmsIds.map((film) => film.id))));
-  const isFilmExist = filmsIdsData.includes(Number(idUrl));
 
   useEffect(() => {
-    //TODO: не работает переход к сущестующему фильму при обращении через адресную строку
-    if (idUrl && isFilmExist) {
-      dispatch(fetchChoosedFilmAction(idUrl));
-      dispatch(fetchFilmCommentsAction(idUrl));
-      dispatch(fetchSimilarFilmsAction(idUrl));
-    } else {
-      navigate('/*');
+    if (id) {
+      dispatch(fetchChoosedFilmAction(id));
+      dispatch(fetchFilmCommentsAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
+      dispatch(checkAuthAction());
     }
-  },[idUrl, isFilmExist, dispatch, navigate]);
+  },[id, dispatch]);
 
 
   const [isTabActive, setIsTabActive] = useState({
@@ -48,19 +50,31 @@ function MoviePageScreen(): JSX.Element {
     isReviewsActive: false
   });
 
+  if (isChoosedFilmLoading || isSimilarFilmsLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  if (!id || !choosedFilm || choosedFilmError){
+    return (
+      <NotFoundScreen />
+    );
+  }
 
   return (
     <>
-      <section className="film-card film-card--full" style={{backgroundColor: choosedFilm?.backgroundColor}}>
+      <section className="film-card film-card--full" style={{backgroundColor: choosedFilm.backgroundColor}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={choosedFilm?.backgroundImage} alt={choosedFilm?.name} />
+            <img src={choosedFilm.backgroundImage} alt={choosedFilm.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            {isUserAuthorized === 'AUTH'
+            <Logo />
+            {isUserAuthorized === AuthorizationStatus.Auth
               ?
               <UserBlock />
               :
@@ -70,20 +84,16 @@ function MoviePageScreen(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{choosedFilm?.name}</h2>
+              <h2 className="film-card__title">{choosedFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{choosedFilm?.genre}</span>
-                <span className="film-card__year">{choosedFilm?.released}</span>
+                <span className="film-card__genre">{choosedFilm.genre}</span>
+                <span className="film-card__year">{choosedFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <PlayButton id={choosedFilm?.id as number}/>
-                <AddToFavoriteButton />
-                {(isUserAuthorized !== 'AUTH')
-                  ?
-                  ''
-                  :
-                  <Link to={`/films/${Number(idUrl)}/review`} className="btn film-card__button">Add review</Link>}
+                <PlayButton id={choosedFilm.id}/>
+                <AddToFavoriteButton filmId={id}/>
+                {(isUserAuthorized === AuthorizationStatus.Auth) && <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -92,7 +102,7 @@ function MoviePageScreen(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={choosedFilm?.posterImage} alt={choosedFilm?.name} width="218" height="327" />
+              <img src={choosedFilm.posterImage} alt={choosedFilm.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -139,29 +149,16 @@ function MoviePageScreen(): JSX.Element {
                   </li>
                 </ul>
               </nav>
-              { isTabActive.isOverviewActive
-                ?
-                <FilmTabOverview film={choosedFilm as Films} />
-                :
-                ''}
-              { isTabActive.isDetailsActive
-                ?
-                <FilmTabDetails film={choosedFilm as Films} />
-                :
-                ''}
-              { isTabActive.isReviewsActive
-                ?
-                <FilmTabReviews reviews={reviews}/>
-                :
-                ''}
-
+              { isTabActive.isOverviewActive && <FilmTabOverview film={choosedFilm} />}
+              { isTabActive.isDetailsActive && <FilmTabDetails film={choosedFilm} />}
+              { isTabActive.isReviewsActive && <FilmTabReviews reviews={reviews}/>}
             </div>
           </div>
         </div>
       </section>
 
       <div className="page-content">
-        <CatalogLikeThis films={films}/>
+        <CatalogLikeThis />
         <Footer />
       </div>
     </>

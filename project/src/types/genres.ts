@@ -1,5 +1,6 @@
-import { GenreName } from '../const';
+import { Films } from './films';
 
 export type Genres = {
-  activeGenre: GenreName;
+  activeGenre: string;
+  filteredFilms: Films[];
 }

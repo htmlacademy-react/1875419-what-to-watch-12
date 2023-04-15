@@ -1,14 +1,33 @@
 import AddToFavoriteButton from '../film-card-buttons/add-to-favorite-button';
 import { AuthorizationStatus } from '../../const';
+import { getPromoFilm, getPromoFilmLoadingStatus } from '../../store/films-data/films-data.selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import Logo from '../logo/logo';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PlayButton from '../film-card-buttons/play-button';
-import UserBlock from '../user-header/user-block';
-import { useAppSelector } from '../../hooks';
 import UnauthorizedUserHeader from '../user-header/unauthorized-user-header';
+import { useAppSelector } from '../../hooks';
+import UserBlock from '../user-header/user-block';
 
 
 function MainFilmCard() : JSX.Element {
-  const promoFilm = useAppSelector((state) => state.promoFilm);
-  const isUserAuthorized = useAppSelector((state) => state.authorizationStatus);
+  const promoFilm = useAppSelector(getPromoFilm);
+  const isUserAuthorized = useAppSelector(getAuthorizationStatus);
+  const isPromoFilmLoading = useAppSelector(getPromoFilmLoadingStatus);
+
+  if (isPromoFilmLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  if (!promoFilm) {
+    return (
+      <NotFoundScreen />
+    );
+  }
+
   return (
     <section className="film-card">
       <div className="film-card__bg">
@@ -18,6 +37,7 @@ function MainFilmCard() : JSX.Element {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header film-card__head">
+        <Logo />
         {(isUserAuthorized === AuthorizationStatus.Auth) ? <UserBlock /> : <UnauthorizedUserHeader/>}
 
       </header>
@@ -36,8 +56,8 @@ function MainFilmCard() : JSX.Element {
             </p>
 
             <div className="film-card__buttons">
-              <PlayButton id={promoFilm?.id as number}/>
-              <AddToFavoriteButton />
+              <PlayButton id={promoFilm.id}/>
+              <AddToFavoriteButton filmId={promoFilm.id} />
             </div>
           </div>
         </div>

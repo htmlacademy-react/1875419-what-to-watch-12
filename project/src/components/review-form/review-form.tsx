@@ -2,14 +2,14 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-actions';
+import { getChoosedFilm } from '../../store/films-data/films-data.selectors';
 import { NewReview } from '../../types/reviews';
 
 const REVIEW_TEXT_MIN_COUNT = 50;
 const REVIEW_TEXT_MAX_COUNT = 400;
 
 function ReviewForm(): JSX.Element {
-  const choosedFilm = useAppSelector((state) => state.choosedFilm);
-
+  const choosedFilm = useAppSelector(getChoosedFilm);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ function ReviewForm(): JSX.Element {
     'review-text': ''
   });
   const [isDisabled, setDisabled] = useState(true);
-
 
   const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -34,7 +33,6 @@ function ReviewForm(): JSX.Element {
 
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
-    // TODO: плохой UI. проверка не срабатывает
     if (formData.rating && formData['review-text'].length >= REVIEW_TEXT_MIN_COUNT && formData['review-text'].length <= REVIEW_TEXT_MAX_COUNT) {
       setDisabled(false);
     } else {
@@ -42,8 +40,8 @@ function ReviewForm(): JSX.Element {
     }
   };
 
-  return(
 
+  return(
     <form
       action="#"
       className="add-review__form"
@@ -91,10 +89,18 @@ function ReviewForm(): JSX.Element {
           placeholder="Review text"
           minLength={50} maxLength={400}
           required
+          style={{backgroundColor: choosedFilm?.backgroundColor, opacity: 0.8}}
         >
         </textarea>
-        <div className="add-review__submit">
-          <button className="add-review__btn" type="submit" disabled={isDisabled}>Post</button>
+        <div className="add-review__submit" style={{backgroundColor: choosedFilm?.backgroundColor, opacity: 0.8}}>
+          <button
+            className="add-review__btn"
+            type="submit"
+            disabled={isDisabled}
+            style={{backgroundColor: choosedFilm?.backgroundColor, opacity: 0.8}}
+          >
+            Post
+          </button>
         </div>
 
       </div>
