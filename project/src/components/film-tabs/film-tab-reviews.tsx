@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { getFilmCommentsLoadingStatus } from '../../store/films-data/films-data.selectors';
 import { Reviews } from '../../types/reviews';
-import { formatReviewDate } from '../../utils';
+import { formatReviewDate } from '../../utils/utils';
 
 const LOCALE = 'en-US';
 

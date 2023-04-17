@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../const';
+import {NameSpace} from '../../utils/const';
 import { Genres } from '../../types/genres';
 import { Films } from '../../types/films';
 

@@ -6,8 +6,8 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { fetchChoosedFilmAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import { getTimeLeft } from '../../utils';
-import { STEP_BACK } from '../../const';
+import { getTimeLeft } from '../../utils/utils';
+import { STEP_BACK } from '../../utils/const';
 
 function PlayerScreen(): JSX.Element {
 

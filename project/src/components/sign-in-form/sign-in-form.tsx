@@ -1,6 +1,6 @@
 import {useRef, FormEvent, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {AppRoute, SignInError, ValidationPattern} from '../../const';
+import {AppRoute, SignInError, ValidationPattern} from '../../utils/const';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks';

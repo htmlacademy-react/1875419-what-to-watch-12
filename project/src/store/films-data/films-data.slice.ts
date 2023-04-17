@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY, NameSpace } from '../../const';
+import { DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY, NameSpace } from '../../utils/const';
 import { FilmsState } from '../../types/films';
 import { fetchFilmsAction, fetchChoosedFilmAction, fetchFavoriteFilmsAction, fetchPromoFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction, postFavoriteFilm } from '../api-actions';
 

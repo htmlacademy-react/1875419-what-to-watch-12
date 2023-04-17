@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import AddToFavoriteButton from '../../components/film-card-buttons/add-to-favorite-button';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../utils/const';
 import CatalogLikeThis from '../../components/catalog/catalog-like-this';
 import { checkAuthAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import FilmTabDetails from '../../components/film-tabs/film-tab-details';

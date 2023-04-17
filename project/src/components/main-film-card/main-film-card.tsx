@@ -1,5 +1,5 @@
 import AddToFavoriteButton from '../film-card-buttons/add-to-favorite-button';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../utils/const';
 import { getPromoFilm, getPromoFilmLoadingStatus } from '../../store/films-data/films-data.selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import Logo from '../logo/logo';
