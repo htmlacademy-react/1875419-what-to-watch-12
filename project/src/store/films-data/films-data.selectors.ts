@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import {NameSpace} from '../../const';
+import {NameSpace} from '../../utils/const';
 import {State} from '../../types/state';
 
 export const getFilms = (state: State) => state[NameSpace.Films].films;

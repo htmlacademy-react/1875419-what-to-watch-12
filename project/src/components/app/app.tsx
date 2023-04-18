@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../utils/const';
 import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';

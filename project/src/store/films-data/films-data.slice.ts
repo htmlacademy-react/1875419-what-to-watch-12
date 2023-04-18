@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY, NameSpace } from '../../const';
+import { DEFAULT_RENDERED_FILMS_QUANTITY, FILMS_TO_RENDER_QUANTITY, NameSpace } from '../../utils/const';
 import { FilmsState } from '../../types/films';
 import { fetchFilmsAction, fetchChoosedFilmAction, fetchFavoriteFilmsAction, fetchPromoFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction, postFavoriteFilm } from '../api-actions';
 
-const initialState: FilmsState = {
+export const initialState: FilmsState = {
   films: [],
   promoFilm: null,
   choosedFilm: null,
@@ -20,7 +20,7 @@ const initialState: FilmsState = {
   renderedFilmsCount: DEFAULT_RENDERED_FILMS_QUANTITY
 };
 
-export const filmsData = createSlice({
+export const filmsDataSlice = createSlice({
   name: NameSpace.Films,
   initialState,
   reducers: {
@@ -111,4 +111,4 @@ export const filmsData = createSlice({
   }
 });
 
-export const { renderMoreFilms, resetRenderedFilms } = filmsData.actions;
+export const { renderMoreFilms, resetRenderedFilms } = filmsDataSlice.actions;

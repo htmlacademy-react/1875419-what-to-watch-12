@@ -1,9 +1,9 @@
 import cn from 'classnames';
 import { Link, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../utils/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { chooseGenre } from '../../store/genres-data/genres-data.slice';
-import { GenreName } from '../../const';
+import { GenreName } from '../../utils/const';
 import { memo } from 'react';
 
 type GenreItemProp = {

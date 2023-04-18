@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import useGetFilteredFilms from '../../hooks/use-get-filtered-films';
 import CatalogFilmsList from './catalog-films-list';
-import { GenreName } from '../../const';
+import { GenreName } from '../../utils/const';
 
 
 function CatalogFilms(): JSX.Element {

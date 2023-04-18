@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Films } from '../../types/films';
-import { FilmRating } from '../../const';
+import { FilmRating } from '../../utils/const';
 
 type OverviewProp ={
   film: Films;

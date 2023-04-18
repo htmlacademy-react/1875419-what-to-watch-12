@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../utils/const';
 import { fetchFavoriteFilmsAction, postFavoriteFilm } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { getFavoriteFilmsAmount, getIsFilmFavorite } from '../../store/films-data/films-data.selectors';
