@@ -7,7 +7,7 @@ export const initialState: Genres = {
   filteredFilms: []
 };
 
-export const genresData = createSlice({
+export const genresDataSlice = createSlice({
   name: NameSpace.Genres,
   initialState,
   reducers: {
@@ -17,4 +17,4 @@ export const genresData = createSlice({
   },
 });
 
-export const { chooseGenre } = genresData.actions;
+export const { chooseGenre } = genresDataSlice.actions;

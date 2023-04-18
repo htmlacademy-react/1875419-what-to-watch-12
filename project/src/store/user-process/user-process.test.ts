@@ -1,4 +1,4 @@
-import { userProcess } from './user-process.slice';
+import { userProcessSlice } from './user-process.slice';
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../utils/const';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
@@ -11,35 +11,35 @@ describe('Reducer: user', () => {
   });
 
   it('without additional parameters should return initial state', () => {
-    expect(userProcess.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
+    expect(userProcessSlice.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
       .toEqual({authorizationStatus: AuthorizationStatus.Unknown});
   });
 
   describe('checkAuthAction test', () => {
     it('should update authorizationStatus to "AUTH" if checkAuthAction fulfilled', () => {
-      expect(userProcess.reducer(state, { type: checkAuthAction.fulfilled.type }))
+      expect(userProcessSlice.reducer(state, { type: checkAuthAction.fulfilled.type }))
         .toEqual({authorizationStatus: AuthorizationStatus.Auth});
     });
     it('should update authorizationStatus to "NO_AUTH" if checkAuthAction rejected', () => {
-      expect(userProcess.reducer(state, { type: checkAuthAction.rejected.type }))
+      expect(userProcessSlice.reducer(state, { type: checkAuthAction.rejected.type }))
         .toEqual({authorizationStatus: AuthorizationStatus.NoAuth});
     });
   });
 
   describe('loginAction test', () => {
     it('should update authorizationStatus to "AUTH" if loginAction fulfilled', () => {
-      expect(userProcess.reducer(state, { type: loginAction.fulfilled.type }))
+      expect(userProcessSlice.reducer(state, { type: loginAction.fulfilled.type }))
         .toEqual({authorizationStatus: AuthorizationStatus.Auth});
     });
     it('should update authorizationStatus to "NO_AUTH" if loginAction rejected', () => {
-      expect(userProcess.reducer(state, { type: loginAction.rejected.type }))
+      expect(userProcessSlice.reducer(state, { type: loginAction.rejected.type }))
         .toEqual({authorizationStatus: AuthorizationStatus.NoAuth});
     });
   });
 
   describe('logoutAction test', () => {
     it('should update authorizationStatus to "NO_AUTH" if logoutAction fulfilled', () => {
-      expect(userProcess.reducer(state, { type: logoutAction.fulfilled.type }))
+      expect(userProcessSlice.reducer(state, { type: logoutAction.fulfilled.type }))
         .toEqual({authorizationStatus: AuthorizationStatus.NoAuth});
     });
   });

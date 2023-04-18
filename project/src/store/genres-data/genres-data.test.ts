@@ -1,13 +1,13 @@
-import { genresData, initialState, chooseGenre } from './genres-data.slice';
+import { genresDataSlice, initialState, chooseGenre } from './genres-data.slice';
 
 describe('Reducer: genresData', () => {
   it('without additional parameters should return initial state', () => {
-    expect(genresData.reducer(initialState, {type: 'UNKNOWN_ACTION'}))
+    expect(genresDataSlice.reducer(initialState, {type: 'UNKNOWN_ACTION'}))
       .toEqual(initialState);
   });
 
   it('should return choosed active genre', () => {
-    expect(genresData.reducer(initialState, chooseGenre('Comedy')))
+    expect(genresDataSlice.reducer(initialState, chooseGenre('Comedy')))
       .toEqual({...initialState, activeGenre: 'Comedy'});
   });
 }
