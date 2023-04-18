@@ -3,7 +3,7 @@ import MainFilmCard from '../../components/main-film-card/main-film-card';
 import Footer from '../../components/footer/footer';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { checkAuthAction, fetchFilmsAction, fetchPromoFilmAction } from '../../store/api-actions';
+import { fetchFilmsAction, fetchPromoFilmAction } from '../../store/api-actions';
 
 
 function MainScreen (): JSX.Element {
@@ -13,7 +13,6 @@ function MainScreen (): JSX.Element {
   useEffect(() => {
     dispatch(fetchFilmsAction());
     dispatch(fetchPromoFilmAction());
-    dispatch(checkAuthAction());
   },[dispatch]);
 
   return (
