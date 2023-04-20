@@ -133,20 +133,14 @@ export const addReviewAction = createAsyncThunk<Reviews[] | undefined, NewReview
   }>(
     'films/review',
     async ({comment, rating}, {dispatch, getState, extra: api}) => {
-      try {
-        const state = getState();
-        const id = state.FILMS.choosedFilm?.id;
-        if (id) {
-          const {data} = await api.post<Reviews[]>(`comments/${id}`, {comment, rating});
-          dispatch(fetchFilmCommentsAction(id));
-          return data;}
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          toast.error(error.message);
-        }
-      }
-    },
-  );
+      const state = getState();
+      const id = state.FILMS.choosedFilm?.id;
+      if (id) {
+        const {data} = await api.post<Reviews[]>(`comments/${id}`, {comment, rating});
+        dispatch(fetchFilmCommentsAction(id));
+        return data;}
+    });
+
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

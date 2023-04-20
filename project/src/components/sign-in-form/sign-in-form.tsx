@@ -15,7 +15,6 @@ function SignInForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const checkValidity = (field: HTMLInputElement, pattern: RegExp) => field.value.match(pattern);
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
@@ -24,8 +23,8 @@ function SignInForm(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current && passwordRef.current) {
-      const isEmailValid = checkValidity(loginRef.current, ValidationPattern.Email);
-      const isPasswordValid = checkValidity(passwordRef.current, ValidationPattern.Password);
+      const isEmailValid = ValidationPattern.Email.test(loginRef.current.value);
+      const isPasswordValid = ValidationPattern.Password.test(passwordRef.current.value);
 
       if (isEmailValid && isPasswordValid) {
         onSubmit({
@@ -41,7 +40,6 @@ function SignInForm(): JSX.Element {
         setErrorMessage(error);
       }
     }
-
   };
   return (
     <div className="sign-in user-page__content">
