@@ -75,7 +75,7 @@ export const SignInError = {
 } as const;
 
 export const ValidationPattern = {
-  Email: /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/,
+  Email: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
   Password: /([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])/,
 } as const;
 
