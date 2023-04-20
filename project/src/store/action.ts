@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../utils/const';
 
 
 export const setFilmsDataLoadingStatus = createAction<boolean>('setFilmsDataLoadingStatus');
