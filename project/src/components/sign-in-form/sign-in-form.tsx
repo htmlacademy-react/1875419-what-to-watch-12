@@ -40,7 +40,6 @@ function SignInForm(): JSX.Element {
         setErrorMessage(error);
       }
     }
-
   };
   return (
     <div className="sign-in user-page__content">
