@@ -105,7 +105,7 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<Films[], undefined, {
       }
     });
 
-export const postFavoriteFilm = createAsyncThunk<Films | void, {
+export const postFavoriteFilmAction = createAsyncThunk<Films | void, {
       filmId: number;
       status: number;
     }, {

@@ -1,6 +1,6 @@
 import { filmsDataSlice, initialState } from './films-data.slice';
 import { makeFakeFilm, makeFakeReview } from '../../utils/mocks';
-import { fetchFilmsAction, fetchSimilarFilmsAction, fetchPromoFilmAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction } from '../api-actions';
+import { fetchFilmsAction, fetchSimilarFilmsAction, fetchPromoFilmAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction, postFavoriteFilmAction } from '../api-actions';
 
 describe('Reducer: filmsData', () => {
   it('without additional parameters should return initial state', () => {
@@ -119,5 +119,37 @@ describe('Reducer: filmsData', () => {
         ...initialState,
         favoriteFilms
       });
+  });
+
+  describe('postFavoriteFilmAction test', () => {
+    const favoriteFilm = makeFakeFilm();
+    favoriteFilm.isFavorite = true;
+    const favoritesFilmsArr = [makeFakeFilm(), makeFakeFilm()];
+    favoritesFilmsArr[0].isFavorite = true;
+    favoritesFilmsArr[1].isFavorite = true;
+    const unFavoriteFilm = { ...favoritesFilmsArr[0] };
+    unFavoriteFilm.isFavorite = false;
+
+    it('should update favoriteFilms if postFavoriteFilmAction fulfilled', () => {
+      expect(filmsDataSlice.reducer({ ...initialState, favoriteFilms: favoritesFilmsArr }, {
+        type: postFavoriteFilmAction.fulfilled.type,
+        payload: favoriteFilm
+      }))
+        .toEqual({
+          ...initialState,
+          favoriteFilms: [...favoritesFilmsArr, favoriteFilm]
+        });
+    });
+
+    it('should remove favoriteFilm if postFavoriteFilmAction fulfilled', () => {
+      expect(filmsDataSlice.reducer({ ...initialState, favoriteFilms: favoritesFilmsArr}, {
+        type: postFavoriteFilmAction.fulfilled.type,
+        payload: unFavoriteFilm
+      }))
+        .toEqual({
+          ...initialState,
+          favoriteFilms: [favoritesFilmsArr[1]]
+        });
+    });
   });
 });
