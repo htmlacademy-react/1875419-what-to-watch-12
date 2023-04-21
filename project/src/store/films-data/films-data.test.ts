@@ -1,11 +1,25 @@
-import { filmsDataSlice, initialState } from './films-data.slice';
+import { filmsDataSlice, initialState, renderMoreFilms, resetRenderedFilms } from './films-data.slice';
 import { makeFakeFilm, makeFakeReview } from '../../utils/mocks';
 import { fetchFilmsAction, fetchSimilarFilmsAction, fetchPromoFilmAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction, postFavoriteFilmAction } from '../api-actions';
 
-describe('Reducer: filmsData', () => {
+describe('Reducer: filmsDataSlice', () => {
   it('without additional parameters should return initial state', () => {
     expect(filmsDataSlice.reducer(initialState, {type: 'UNKNOWN_ACTION'}))
       .toEqual(initialState);
+  });
+
+  it('should increase renderedFilmsCount by 8', () => {
+    const increasedFilmsAmount = 16;
+    expect(filmsDataSlice.reducer(initialState, renderMoreFilms()))
+      .toEqual({...initialState, renderedFilmsCount: increasedFilmsAmount});
+  });
+
+  it('should set renderedFilmsCount to default value 8', () => {
+    const resetedFilmsAmount = 8;
+    const renderedFilmsCount = {...initialState};
+    renderedFilmsCount.renderedFilmsCount = 16;
+    expect(filmsDataSlice.reducer(renderedFilmsCount, resetRenderedFilms()))
+      .toEqual({...initialState, renderedFilmsCount: resetedFilmsAmount});
   });
 
   it('should return array of films objects', () => {
