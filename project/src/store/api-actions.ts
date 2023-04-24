@@ -8,6 +8,7 @@ import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
 import { Reviews } from '../types/reviews';
 import { NewReview } from '../types/reviews';
+import { AppRoute } from '../utils/const';
 
 
 export const fetchFilmsAction = createAsyncThunk<Films[], undefined, {
@@ -105,7 +106,7 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<Films[], undefined, {
       }
     });
 
-export const postFavoriteFilm = createAsyncThunk<Films | void, {
+export const postFavoriteFilmAction = createAsyncThunk<Films | void, {
       filmId: number;
       status: number;
     }, {
@@ -142,18 +143,19 @@ export const addReviewAction = createAsyncThunk<Reviews[] | undefined, NewReview
     });
 
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, {extra: api}) => {
-    await api.get('login');
+    const {data} = await api.get<UserData>(AppRoute.SignIn);
+    return data;
   }
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<UserData | void, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -161,8 +163,9 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   'user/login',
   async ({login: email, password}, { extra: api}) => {
     try {
-      const {data: {token}} = await api.post<UserData>('login', {email, password});
-      saveToken(token);
+      const {data} = await api.post<UserData>('login', {email, password});
+      saveToken(data.token);
+      return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.message);

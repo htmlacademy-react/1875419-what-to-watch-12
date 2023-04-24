@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 function Spinner(): JSX.Element {
   return (
-    <div className="loader" style = {{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}></div>
+    <div className="loader" data-testid="spinner" style = {{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}></div>
   );
 }
 

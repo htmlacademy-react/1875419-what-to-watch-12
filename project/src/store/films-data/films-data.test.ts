@@ -1,11 +1,25 @@
-import { filmsDataSlice, initialState } from './films-data.slice';
+import { filmsDataSlice, initialState, renderMoreFilms, resetRenderedFilms } from './films-data.slice';
 import { makeFakeFilm, makeFakeReview } from '../../utils/mocks';
-import { fetchFilmsAction, fetchSimilarFilmsAction, fetchPromoFilmAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction } from '../api-actions';
+import { fetchFilmsAction, fetchSimilarFilmsAction, fetchPromoFilmAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction, postFavoriteFilmAction } from '../api-actions';
 
-describe('Reducer: filmsData', () => {
+describe('Reducer: filmsDataSlice', () => {
   it('without additional parameters should return initial state', () => {
     expect(filmsDataSlice.reducer(initialState, {type: 'UNKNOWN_ACTION'}))
       .toEqual(initialState);
+  });
+
+  it('should increase renderedFilmsCount by 8', () => {
+    const increasedFilmsAmount = 16;
+    expect(filmsDataSlice.reducer(initialState, renderMoreFilms()))
+      .toEqual({...initialState, renderedFilmsCount: increasedFilmsAmount});
+  });
+
+  it('should set renderedFilmsCount to default value 8', () => {
+    const resetedFilmsAmount = 8;
+    const renderedFilmsCount = {...initialState};
+    renderedFilmsCount.renderedFilmsCount = 16;
+    expect(filmsDataSlice.reducer(renderedFilmsCount, resetRenderedFilms()))
+      .toEqual({...initialState, renderedFilmsCount: resetedFilmsAmount});
   });
 
   it('should return array of films objects', () => {
@@ -119,5 +133,37 @@ describe('Reducer: filmsData', () => {
         ...initialState,
         favoriteFilms
       });
+  });
+
+  describe('postFavoriteFilmAction test', () => {
+    const favoriteFilm = makeFakeFilm();
+    favoriteFilm.isFavorite = true;
+    const favoritesFilmsArr = [makeFakeFilm(), makeFakeFilm()];
+    favoritesFilmsArr[0].isFavorite = true;
+    favoritesFilmsArr[1].isFavorite = true;
+    const unFavoriteFilm = { ...favoritesFilmsArr[0] };
+    unFavoriteFilm.isFavorite = false;
+
+    it('should update favoriteFilms if postFavoriteFilmAction fulfilled', () => {
+      expect(filmsDataSlice.reducer({ ...initialState, favoriteFilms: favoritesFilmsArr }, {
+        type: postFavoriteFilmAction.fulfilled.type,
+        payload: favoriteFilm
+      }))
+        .toEqual({
+          ...initialState,
+          favoriteFilms: [...favoritesFilmsArr, favoriteFilm]
+        });
+    });
+
+    it('should remove favoriteFilm if postFavoriteFilmAction fulfilled', () => {
+      expect(filmsDataSlice.reducer({ ...initialState, favoriteFilms: favoritesFilmsArr}, {
+        type: postFavoriteFilmAction.fulfilled.type,
+        payload: unFavoriteFilm
+      }))
+        .toEqual({
+          ...initialState,
+          favoriteFilms: [favoritesFilmsArr[1]]
+        });
+    });
   });
 });

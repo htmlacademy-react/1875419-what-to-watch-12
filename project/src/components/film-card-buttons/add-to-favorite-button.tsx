@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../utils/const';
-import { fetchFavoriteFilmsAction, postFavoriteFilm } from '../../store/api-actions';
+import { fetchFavoriteFilmsAction, postFavoriteFilmAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { getFavoriteFilmsAmount, getIsFilmFavorite } from '../../store/films-data/films-data.selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -27,7 +27,7 @@ function AddToFavoriteButton({filmId}: FavoriteButtonProps): JSX.Element {
 
   const handleButtonClick = () => {
     authStatus === AuthorizationStatus.Auth
-      ? dispatch(postFavoriteFilm({ filmId, status: isFavorite ? 0 : 1 }))
+      ? dispatch(postFavoriteFilmAction({ filmId, status: isFavorite ? 0 : 1 }))
       : navigate(AppRoute.SignIn);
     setRefreshPage(!refreshPage);
   };
