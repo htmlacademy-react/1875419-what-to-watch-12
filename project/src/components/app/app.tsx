@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import { AppRoute } from '../../utils/const';
 import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
@@ -13,56 +13,54 @@ import PrivateRoute from '../private-route/private-route';
 function App(): JSX.Element {
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element = {
-            <MainScreen />
-          }
-        />
-        <Route
-          path={AppRoute.SignIn}
-          element={<AuthorizationScreen />}
-        />
-        <Route
-          path={AppRoute.Film}
-          element={<MoviePageScreen />}
-        />
-        <Route
-          path={AppRoute.FilmDetails}
-          element={<MoviePageScreen />}
-        />
-        <Route
-          path={AppRoute.FilmReviews}
-          element={<MoviePageScreen />}
-        />
-        <Route
-          path={AppRoute.MyList}
-          element={
-            <PrivateRoute>
-              <MyListScreen />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.AddReview}
-          element={
-            <PrivateRoute>
-              <AddReviewScreen />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Player}
-          element={<PlayerScreen />}
-        />
-        <Route
-          path="*"
-          element={<NotFoundScreen />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route
+        path={AppRoute.Main}
+        element = {
+          <MainScreen />
+        }
+      />
+      <Route
+        path={AppRoute.SignIn}
+        element={<AuthorizationScreen />}
+      />
+      <Route
+        path={AppRoute.Film}
+        element={<MoviePageScreen />}
+      />
+      <Route
+        path={AppRoute.FilmDetails}
+        element={<MoviePageScreen />}
+      />
+      <Route
+        path={AppRoute.FilmReviews}
+        element={<MoviePageScreen />}
+      />
+      <Route
+        path={AppRoute.MyList}
+        element={
+          <PrivateRoute>
+            <MyListScreen />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.AddReview}
+        element={
+          <PrivateRoute>
+            <AddReviewScreen />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Player}
+        element={<PlayerScreen />}
+      />
+      <Route
+        path="*"
+        element={<NotFoundScreen />}
+      />
+    </Routes>
   );
 }
 
