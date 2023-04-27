@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
-import { AppRoute } from '../../utils/const';
+import { AppRoute, AuthorizationStatus } from '../../utils/const';
 import AuthorizationScreen from '../../pages/authorization-screen/authorization-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
@@ -8,9 +8,22 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
+//import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { checkAuthAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 
 function App(): JSX.Element {
+
+  const isAuthorized = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(()=>{
+    dispatch(checkAuthAction());
+  },[dispatch]);
+
 
   return (
     <Routes>
@@ -39,7 +52,7 @@ function App(): JSX.Element {
       <Route
         path={AppRoute.MyList}
         element={
-          <PrivateRoute>
+          <PrivateRoute isAuthorized={isAuthorized === AuthorizationStatus.Auth}>
             <MyListScreen />
           </PrivateRoute>
         }
@@ -47,7 +60,7 @@ function App(): JSX.Element {
       <Route
         path={AppRoute.AddReview}
         element={
-          <PrivateRoute>
+          <PrivateRoute isAuthorized={isAuthorized === AuthorizationStatus.Auth}>
             <AddReviewScreen />
           </PrivateRoute>
         }

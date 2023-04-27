@@ -6,14 +6,14 @@ import HistoryRouter from '../history-route/history-route';
 import App from './app';
 import { createAPI } from '../../services/api';
 import thunk from 'redux-thunk';
-import { makeFakeFilm, makeFakeReview, makeFakeUser } from '../../utils/mocks';
+import { makeFakeFilms, makeFakeReview, makeFakeUser } from '../../utils/mocks';
 import { AppRoute, AuthorizationStatus, DEFAULT_RENDERED_FILMS_QUANTITY, GenreName, NameSpace } from '../../utils/const';
 
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
-const mockFilms = [makeFakeFilm(), makeFakeFilm()];
+const mockFilms = makeFakeFilms();
 const mockFilm = mockFilms[0];
 const mockReviews = [makeFakeReview(), makeFakeReview()];
 const mockUser = makeFakeUser();
@@ -60,11 +60,28 @@ describe('Application Routing', () => {
 
   it('should render "MyList" when user navigate to "/mylist"', () => {
     history.push(AppRoute.MyList);
-    //TODO: почему меня кидает на страницу авторизации?
     render(fakeApp);
 
     expect(screen.getByText('My list')).toBeInTheDocument();
     expect(screen.getByText('Catalog')).toBeInTheDocument();
+  });
+
+  it('should render MoviePageScreen when user navigate to "/films/filmId"', () => {
+    history.push(`/films/${mockFilm.id}`);
+    render(fakeApp);
+
+    expect(screen.getByText(`${mockFilm.name}`)).toBeInTheDocument();
+    expect(screen.getByText(`${mockFilm.genre}`)).toBeInTheDocument();
+    expect(screen.getByText(`${mockFilm.released}`)).toBeInTheDocument();
+    expect(screen.getByText('More like this')).toBeInTheDocument();
+  });
+
+  it('should render "ErrorPage" when user navigate to non-existent route', () => {
+    history.push('/non-existent-route');
+
+    render(fakeApp);
+
+    expect(screen.getByText('Page Not Found')).toBeInTheDocument();
   });
 
 });

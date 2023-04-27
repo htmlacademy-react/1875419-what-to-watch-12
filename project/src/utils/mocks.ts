@@ -3,9 +3,11 @@ import { Films } from '../types/films';
 import { Reviews } from '../types/reviews';
 import { UserData } from '../types/user-data';
 
+const MOCK_DEFAULT_NUMBER = 1;
+const FILMS_AMOUNT = 5;
 
-export const makeFakeFilm = () : Films => ({
-  id: datatype.number({min: 1, max: 25}),
+export const makeFakeFilm = (id = MOCK_DEFAULT_NUMBER):Films=>({
+  id,
   name: random.words(2),
   posterImage: image.cats(218, 327),
   previewImage: image.cats(280, 175),
@@ -23,6 +25,8 @@ export const makeFakeFilm = () : Films => ({
   isFavorite: datatype.boolean()
 
 } as Films);
+
+export const makeFakeFilms = (amount = FILMS_AMOUNT):Films[]=> Array.from({length:amount},(_, i)=> makeFakeFilm(i + 1));
 
 export const makeFakeReview = (): Reviews => ({
   id: datatype.number({min: 1, max: 25}),
