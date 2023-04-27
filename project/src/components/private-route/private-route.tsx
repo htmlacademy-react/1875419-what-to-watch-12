@@ -1,6 +1,5 @@
 import {Navigate} from 'react-router-dom';
 import {AppRoute} from '../../utils/const';
-// import { getToken } from '../../services/token';
 
 type PrivateRouteProps = {
   isAuthorized: boolean;
