@@ -2,6 +2,7 @@ import FilmCard from '../film-card/film-card';
 import { useAppSelector } from '../../hooks';
 import { getSimilarFilms, getSimilarFilmsLoadingStatus } from '../../store/films-data/films-data.selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useParams } from 'react-router-dom';
 
 const MAX_FILMS_COUNT = 4;
 
@@ -9,6 +10,8 @@ const MAX_FILMS_COUNT = 4;
 function CatalogLikeThis(): JSX.Element {
   const similarFilms = useAppSelector(getSimilarFilms);
   const isSimilarFilmsLoading = useAppSelector(getSimilarFilmsLoadingStatus);
+  const {id:filmId} = useParams();
+  const id = Number(filmId);
 
   if(isSimilarFilmsLoading) {
     return (
@@ -20,7 +23,7 @@ function CatalogLikeThis(): JSX.Element {
       <h2 className="catalog__title">More like this</h2>
 
       <div className="catalog__films-list">
-        {similarFilms.slice(0,MAX_FILMS_COUNT).map((film) => (
+        {similarFilms.filter((item)=> item.id !== id).slice(0,MAX_FILMS_COUNT).map((film) => (
           <FilmCard
             key={film.id}
             id={film.id}

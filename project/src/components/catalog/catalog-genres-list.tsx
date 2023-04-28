@@ -7,15 +7,11 @@ type GenresProp = {
 
 function CatalogGenresList({filmsGenres}: GenresProp): JSX.Element {
   return (
-    <>
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-      <ul className="catalog__genres-list">
-        {useMemo(() => filmsGenres.map((genre) => (
-          <CatalogGenreItem genre={genre} key={genre} />
-        )), [filmsGenres])}
-      </ul>
-    </>
+    <ul className="catalog__genres-list">
+      {useMemo(() => filmsGenres.map((genre) => (
+        <CatalogGenreItem genre={genre} key={genre} />
+      )), [filmsGenres])}
+    </ul>
   );
 }
 

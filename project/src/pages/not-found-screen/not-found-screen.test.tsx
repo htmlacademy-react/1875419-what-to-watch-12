@@ -1,14 +1,16 @@
 import { render, screen} from '@testing-library/react';
-import { BrowserRouter} from 'react-router-dom';
 import NotFoundScreen from './not-found-screen';
+import { createMemoryHistory } from 'history';
+import HistoryRouter from '../../components/history-route/history-route';
 
+const history = createMemoryHistory();
 describe('Component: NotFoundScreen', () => {
   it('should render correctly', () => {
 
     render(
-      <BrowserRouter>
+      <HistoryRouter history={history}>
         <NotFoundScreen />
-      </BrowserRouter>,
+      </HistoryRouter>,
     );
 
     const headerElement = screen.getByText('Page Not Found');
