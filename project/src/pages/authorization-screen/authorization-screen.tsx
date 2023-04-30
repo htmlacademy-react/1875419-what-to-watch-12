@@ -7,7 +7,7 @@ function AuthorizationScreen(): JSX.Element {
     <div className="user-page">
       <header className="page-header user-page__head">
         <Logo />
-        <h1 className="page-title user-page__title">Sign in</h1>
+        <h1 className="page-title user-page__title" data-testid="sign-in-header">Sign in</h1>
       </header>
       <SignInForm />
       <Footer />

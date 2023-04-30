@@ -18,7 +18,7 @@ function MainScreen (): JSX.Element {
   return (
     <>
       <MainFilmCard />
-      <div className="page-content">
+      <div className="page-content" data-testid="main-screen">
         <CatalogFilms/>
         <Footer />
       </div>
