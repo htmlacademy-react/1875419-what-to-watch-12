@@ -1,4 +1,4 @@
-import FilmCard from '../film-card/film-card';
+import FilmCard from '../film-card/film-card-small';
 import { useAppSelector } from '../../hooks';
 import { getSimilarFilms, getSimilarFilmsLoadingStatus } from '../../store/films-data/films-data.selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
