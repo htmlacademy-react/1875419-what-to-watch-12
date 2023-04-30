@@ -18,7 +18,7 @@ function UserBlock(): JSX.Element {
     <ul className="user-block">
       <li className="user-block__item">
         <Link to={AppRoute.MyList}>
-          <div className="user-block__avatar">
+          <div className="user-block__avatar" data-testid="user-avatar">
             <img src={userData?.avatarUrl} alt={userData?.name} width="63" height="63" />
           </div>
         </Link>
