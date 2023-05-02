@@ -10,7 +10,7 @@ export type FilmCardProps = {
 }
 
 
-function FilmCard({
+function FilmCardSmall({
   previewImage,
   name,
   id,
@@ -31,8 +31,9 @@ function FilmCard({
       onMouseOver={onMouseOverHandler}
       onMouseOut={onMouseOutHandler}
       className="small-film-card catalog__films-card"
+      data-testid="card-article"
     >
-      <Link className="small-film-card__link" to={`/films/${id}`}>
+      <Link className="small-film-card__link" to={`/films/${id}`} data-testid="link-to-film">
         <FilmCardToggle
           isActive={isActive}
           videoLink={previewVideoLink}
@@ -51,4 +52,4 @@ function FilmCard({
   );
 }
 
-export default FilmCard;
+export default FilmCardSmall;

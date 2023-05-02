@@ -2,7 +2,7 @@
 
 * Студент: [Ксения Нечукина](https://up.htmlacademy.ru/react/12/user/1875419).
 * Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
-
+* Ссылка на сайт: https://amazing-cajeta-f1c625.netlify.app
 ---
 
 _Не удаляйте и не изменяйте папки и файлы:_

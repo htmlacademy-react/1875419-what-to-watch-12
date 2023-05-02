@@ -23,7 +23,7 @@ function AddReviewScreen(): JSX.Element {
 
 
   return (
-    <section className="film-card film-card--full" style={{ backgroundColor: filmChoosed?.backgroundColor }}>
+    <section className="film-card film-card--full" style={{ backgroundColor: filmChoosed?.backgroundColor }} data-testid="review">
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={filmChoosed?.backgroundImage} alt={filmChoosed?.name} />

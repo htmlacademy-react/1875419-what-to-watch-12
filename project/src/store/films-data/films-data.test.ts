@@ -1,5 +1,5 @@
 import { filmsDataSlice, initialState, renderMoreFilms, resetRenderedFilms } from './films-data.slice';
-import { makeFakeFilm, makeFakeReview } from '../../utils/mocks';
+import { makeFakeFilm, makeFakeFilms, makeFakeReview } from '../../utils/mocks';
 import { fetchFilmsAction, fetchSimilarFilmsAction, fetchPromoFilmAction, fetchChoosedFilmAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction, postFavoriteFilmAction } from '../api-actions';
 
 describe('Reducer: filmsDataSlice', () => {
@@ -138,9 +138,12 @@ describe('Reducer: filmsDataSlice', () => {
   describe('postFavoriteFilmAction test', () => {
     const favoriteFilm = makeFakeFilm();
     favoriteFilm.isFavorite = true;
-    const favoritesFilmsArr = [makeFakeFilm(), makeFakeFilm()];
+    const favoritesFilmsArr = makeFakeFilms();
     favoritesFilmsArr[0].isFavorite = true;
     favoritesFilmsArr[1].isFavorite = true;
+    favoritesFilmsArr[2].isFavorite = true;
+    favoritesFilmsArr[3].isFavorite = true;
+    favoritesFilmsArr[4].isFavorite = true;
     const unFavoriteFilm = { ...favoritesFilmsArr[0] };
     unFavoriteFilm.isFavorite = false;
 
@@ -162,7 +165,7 @@ describe('Reducer: filmsDataSlice', () => {
       }))
         .toEqual({
           ...initialState,
-          favoriteFilms: [favoritesFilmsArr[1]]
+          favoriteFilms: [favoritesFilmsArr[1], favoritesFilmsArr[2], favoritesFilmsArr[3], favoritesFilmsArr[4]]
         });
     });
   });

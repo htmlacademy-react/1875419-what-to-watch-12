@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmsToRenderQuantity } from '../../store/films-data/films-data.selectors';
 import { Films } from '../../types/films';
-import FilmCard from '../film-card/film-card';
+import FilmCardSmall from '../film-card/film-card-small';
 import CatalogMoreBtn from './catalog-more-btn';
 import { resetRenderedFilms } from '../../store/films-data/films-data.slice';
 
@@ -23,7 +23,7 @@ function CatalogFilmsList({films}: CatalogFilmsListProps): JSX.Element {
       <div className="catalog__films-list">
         {useMemo(() => (films.slice(0, renderedFilmsQuantity)
           .map((film) => (
-            <FilmCard
+            <FilmCardSmall
               key={film.id}
               id={film.id}
               name={film.name}

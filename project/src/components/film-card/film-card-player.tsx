@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react';
-import { FilmCardProps } from './film-card';
+import { FilmCardProps } from './film-card-small';
 
 type FilmCardPlayerProps = Pick<FilmCardProps, 'previewVideoLink'> & {
     isPlaying: boolean;
@@ -22,7 +22,7 @@ function FilmCardPlayer({isPlaying, previewVideoLink}: FilmCardPlayerProps): JSX
     }
   },[isPlaying]);
   return (
-    <div className="small-film-card__image">
+    <div className="small-film-card__image" data-testid="card-player">
       <video
         ref={videoRef}
         preload="none"
